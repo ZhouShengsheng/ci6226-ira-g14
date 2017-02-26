@@ -32,6 +32,7 @@ public class APIController {
 
 	@GetMapping(value = "/user_ranking")
 	public List<UserRank> getUserRanking() throws IOException {
+	    logger.info("getUserRanking");
 		return searcher.getAnsweringUserRank();
 	}
 	

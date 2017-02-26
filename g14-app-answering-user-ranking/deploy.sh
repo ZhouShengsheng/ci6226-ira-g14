@@ -4,7 +4,7 @@
 
 # configurations
 SSH_SERVER=shengsheng@155.69.149.197
-APP_NAME=app-user-ranking
+APP_NAME=app-answering-user-ranking
 JAR_FILE=target/g14-${APP_NAME}.jar
 REMOTE_DIR=/home/shengsheng/Workspaces/IR/projects/${APP_NAME}
 SERVER_SH=server.sh

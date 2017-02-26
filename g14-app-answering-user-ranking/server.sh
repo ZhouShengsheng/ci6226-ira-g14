@@ -7,7 +7,7 @@ export JAVA_HOME=/opt/jdk1.8.0_112
 export JRE_HOME=$JAVA_HOME/jre
 
 # configurations
-APP_NAME=app-user-ranking
+APP_NAME=app-answering-user-ranking
 SERVICE_DIR=/home/shengsheng/Workspaces/IR/projects/$APP_NAME
 SERVICE_NAME=g14-$APP_NAME
 JAR_NAME=$SERVICE_NAME\.jar
