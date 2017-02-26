@@ -34,16 +34,16 @@ public abstract class AbstractIndexer {
     @Getter @Setter private boolean willIndex;
 
     // whether the indexing process is done
-    private AtomicBoolean indexed;
+    protected AtomicBoolean indexed;
 
     @Autowired
-    private IndexWriter indexWriter;
+    protected IndexWriter indexWriter;
 
     @Autowired
-    private BufferedReader dataReader;
+    protected BufferedReader dataReader;
 
     @Autowired
-    private Unmarshaller postUnmarshaller;
+    protected Unmarshaller postUnmarshaller;
 
     /**
      * Initialization method, if the willIndex property is set to true, a thread will be instantiated to index the documents.
@@ -57,7 +57,7 @@ public abstract class AbstractIndexer {
             executorService.submit(() -> {
                 try {
                     preProcess();
-                    index();
+                    process();
                     destroy();
                     indexed.set(true);
                     executorService.shutdown();
@@ -93,8 +93,14 @@ public abstract class AbstractIndexer {
      *
      * @throws IOException
      */
-    private void index() throws IOException {
+    protected void process() throws IOException {
         logger.info("Starting indexing");
+        index(dataReader, indexWriter);
+        logger.info("Finished indexing");
+        logger.info("Total documents indexed: {}", indexWriter.maxDoc());
+    }
+
+    protected void index(BufferedReader dataReader, IndexWriter indexWriter) throws IOException {
         String line;
         while ((line = dataReader.readLine()) != null) {
             try {
@@ -113,8 +119,6 @@ public abstract class AbstractIndexer {
                 logger.error("JAXBException: {}", e);
             }
         }
-        logger.info("Finished indexing");
-        logger.info("Total documents indexed: {}", indexWriter.maxDoc());
     }
 
     /**

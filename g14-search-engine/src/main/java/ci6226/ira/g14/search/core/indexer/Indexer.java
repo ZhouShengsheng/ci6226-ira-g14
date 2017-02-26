@@ -34,12 +34,15 @@ public class Indexer extends AbstractIndexer {
 
     // post tags to be indexed
     @Getter @Setter private String indexTags;
-    private List<String> indexTagList;
+    private List<String> indexTagListWithBorder;
+    private List<String> indexTagListRegexPaterns;
 
     @Override
     public void preProcess() {
         // convert indexTags string into a list of tags
-        indexTagList = Arrays.stream(indexTags.toLowerCase().split(",")).map(tag -> String.format("<%s>", tag)).collect(Collectors.toList());
+        List<String> indexTagList = Arrays.stream(indexTags.toLowerCase().split(",")).collect(Collectors.toList());
+        indexTagListWithBorder = indexTagList.stream().map(tag -> String.format("<%s>", tag)).collect(Collectors.toList()); // eg: <java>
+        indexTagListRegexPaterns = indexTagList.stream().map(tag -> String.format(".*\\b%s\\b.*", tag)).collect(Collectors.toList()); // eg: .*\bjava\b.*
         logger.info("Will index documents with tags: {}", indexTags);
     }
 
@@ -66,9 +69,11 @@ public class Indexer extends AbstractIndexer {
         boolean willIndex = false;
 
         // check if tags, title or body contain tags in indexTagList
-        for (String tag : indexTagList) {
-            String pattern = String.format(".*\\b%s\\b.*", tag);    // exactly word match
-            if (tags.contains(tag) || title.matches(pattern) || body.matches(pattern)) {
+        int size = indexTagListWithBorder.size();
+        for (int i = 0; i < size; i++) {
+            String tagWithBorder = indexTagListWithBorder.get(i);
+            String tagRegexPattern = indexTagListRegexPaterns.get(i);
+            if (tags.contains(tagWithBorder) || title.matches(tagRegexPattern) || body.matches(tagRegexPattern)) {
                 willIndex = true;
                 break;
             }

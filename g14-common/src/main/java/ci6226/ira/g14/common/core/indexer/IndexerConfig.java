@@ -17,6 +17,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 
+import javax.annotation.PostConstruct;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
@@ -38,8 +39,36 @@ import java.util.stream.Collectors;
 public class IndexerConfig {
 	
 	private String indexPath;
-    private String dataFile;
-    private String stopWords;
+	private String dataFile;
+	private String stopWords;
+
+    private static String dataFileStatic;
+    private static String stopWordsStatic;
+
+    @PostConstruct
+    private void init() {
+        dataFileStatic = dataFile;
+        stopWordsStatic = stopWords;
+    }
+
+    public static IndexWriter newIndexWriter(String indexPath) throws IOException {
+		File path = new File(indexPath);
+		if (!path.exists()) {
+			path.mkdirs();
+		}
+		Directory dir = FSDirectory.open(Paths.get(indexPath));
+		CharArraySet set = new CharArraySet(Arrays.stream(stopWordsStatic.split(",")).collect(Collectors.toSet()), true);
+		Analyzer analyzer = new EnglishAnalyzer(set);
+		IndexWriterConfig cfg = new IndexWriterConfig(analyzer);
+		cfg.setOpenMode(OpenMode.CREATE);
+		return new IndexWriter(dir, cfg);
+	}
+
+	public static BufferedReader newDataReader() throws FileNotFoundException {
+        FileReader reader = new FileReader(dataFileStatic);
+        BufferedReader br = new BufferedReader(reader);
+        return br;
+    }
 	
 	/**
 	 * Index writer.
@@ -49,16 +78,7 @@ public class IndexerConfig {
 	 */
 	@Bean
 	public IndexWriter indexWriter() throws IOException {
-		File path = new File(indexPath);
-		if (!path.exists()) {
-			path.mkdirs();
-		}
-		Directory dir = FSDirectory.open(Paths.get(indexPath));
-        CharArraySet set = new CharArraySet(Arrays.stream(stopWords.split(",")).collect(Collectors.toSet()), true);
-		Analyzer analyzer = new EnglishAnalyzer(set);
-		IndexWriterConfig cfg = new IndexWriterConfig(analyzer);
-		cfg.setOpenMode(OpenMode.CREATE);
-		return new IndexWriter(dir, cfg);
+		return IndexerConfig.newIndexWriter(indexPath);
 	}
 
 	/**
@@ -77,9 +97,7 @@ public class IndexerConfig {
 	@Bean
 	@Scope(BeanDefinition.SCOPE_PROTOTYPE)
 	public BufferedReader dataReader() throws FileNotFoundException {
-		FileReader reader = new FileReader(dataFile);
-		BufferedReader br = new BufferedReader(reader);
-		return br;
+		return IndexerConfig.newDataReader();
 	}
 	
 }

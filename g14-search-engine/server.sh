@@ -1,6 +1,6 @@
 #!/bin/sh
-# desc: Search engin service script.
-# author: Zhou Shengsheng
+# Desc: Search engin service script.
+# Author: Zhou Shengsheng
 
 # java env
 export JAVA_HOME=/opt/jdk1.8.0_112
@@ -8,7 +8,7 @@ export JRE_HOME=$JAVA_HOME/jre
 
 # configurations
 APP_NAME=search-engine
-SERVICE_DIR=/home/shengsheng/Workspaces/IR/$APP_NAME
+SERVICE_DIR=/home/shengsheng/Workspaces/IR/projects/$APP_NAME
 SERVICE_NAME=g14-$APP_NAME
 JAR_NAME=$SERVICE_NAME\.jar
 PID=$SERVICE_NAME\.pid
@@ -28,7 +28,7 @@ case "$1" in
         rm -rf $SERVICE_DIR/$PID
         echo "=== stopping $SERVICE_NAME"
 
-        sleep 5
+        sleep 2
         P_ID=`ps -ef | grep -w "$SERVICE_NAME" | grep -v "grep" | awk '{print $2}'`
         if [ "$P_ID" != "" ]; then
             kill -9 $P_ID 2> /dev/null
@@ -50,4 +50,3 @@ case "$1" in
         ;;
 esac
 exit 0
-
