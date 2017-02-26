@@ -70,20 +70,30 @@ public class Searcher extends AbstractSearcher<UserRank> {
                     TermsEnum termsEnum = fileds.terms(Indexer.INDEX_FILED_USER_ID).iterator();
                     BytesRef bytesRef;
                     int count = 0;
+
+                    // sort comparator
+                    Comparator<? super UserRank> comparator = (r1, r2) -> r1.getAnwseredCount() >= r2.getAnwseredCount() ? -1 : 1;
+
                     while ((bytesRef = termsEnum.next()) != null) {
                         String userID = bytesRef.utf8ToString();
                         UserRank userRank = new UserRank();
                         userRank.setUserID(userID);
                         userRank.setAnwseredCount(getTermFreq(Indexer.INDEX_FILED_USER_ID, userID));
+                        userRanks.add(userRank);
                         count++;
                         // sort
                         if (count == userCount+sortStep) {
-                            userRanks.sort((r1, r2) -> r1.getAnwseredCount() > r2.getAnwseredCount() ? 1 : 0);
+                            count -= sortStep;
+                            userRanks.sort(comparator);
                             for (int i = 0; i < sortStep; i++) {
                                 userRanks.remove(userCount);
                             }
                         }
                     }
+
+                    // sort
+                    userRanks.sort(comparator);
+
                     // search for username
                     userRanks.forEach(userRank -> {
                         try {
