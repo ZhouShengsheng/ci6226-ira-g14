@@ -1,6 +1,6 @@
 # Server settings
 server:
-  port: 8081
+  port: 9001
 
 # Spring
 spring:

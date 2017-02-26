@@ -14,6 +14,7 @@ import org.apache.lucene.store.FSDirectory;
 import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
 
@@ -36,6 +37,7 @@ import java.util.stream.Collectors;
 @ConfigurationProperties(prefix = "indexer")
 @Getter
 @Setter
+@Conditional(IndexerCondition.class)
 public class IndexerConfig {
 	
 	private String indexPath;

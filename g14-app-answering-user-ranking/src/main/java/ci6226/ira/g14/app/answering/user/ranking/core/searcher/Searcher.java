@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 import java.io.IOException;
 import java.util.*;
@@ -31,10 +32,6 @@ import java.util.*;
 public class Searcher extends AbstractSearcher<UserRank> {
 
     private static final Logger logger = LoggerFactory.getLogger(Searcher.class);
-
-    @Getter @Setter private int userCount;
-
-    private List<UserRank> userRanks;
 
     @Override
     public void preProcess() {
@@ -59,53 +56,53 @@ public class Searcher extends AbstractSearcher<UserRank> {
      * Compute language rank.
      * @return
      */
-    public List<UserRank> getAnsweringUserRank() throws IOException {
-        if (userRanks == null) {
-            synchronized (this) {
-                if (userRanks == null) {
-                    int sortStep = 10;
-                    userRanks = new ArrayList<>(userCount+sortStep);
-                    // get all terms of a filed
-                    Fields fileds = MultiFields.getFields(indexReader);
-                    TermsEnum termsEnum = fileds.terms(Indexer.INDEX_FILED_USER_ID).iterator();
-                    BytesRef bytesRef;
-                    int count = 0;
+    public List<UserRank> getAnsweringUserRank(int userCount) throws IOException {
+        int sortStep = 10;
+        List<UserRank> userRanks = new ArrayList<>(userCount+sortStep);
+        // get all terms of a filed
+        Fields fileds = MultiFields.getFields(indexReader);
+        TermsEnum termsEnum = fileds.terms(Indexer.INDEX_FILED_USER_ID).iterator();
+        BytesRef bytesRef;
+        int count = 0;
 
-                    // sort comparator
-                    Comparator<? super UserRank> comparator = (r1, r2) -> r1.getAnwseredCount() >= r2.getAnwseredCount() ? -1 : 1;
+        // sort comparator
+        Comparator<? super UserRank> comparator = (r1, r2) -> r1.getAnwseredCount() >= r2.getAnwseredCount() ? -1 : 1;
 
-                    while ((bytesRef = termsEnum.next()) != null) {
-                        String userID = bytesRef.utf8ToString();
-                        UserRank userRank = new UserRank();
-                        userRank.setUserID(userID);
-                        userRank.setAnwseredCount(getTermFreq(Indexer.INDEX_FILED_USER_ID, userID));
-                        userRanks.add(userRank);
-                        count++;
-                        // sort
-                        if (count == userCount+sortStep) {
-                            count -= sortStep;
-                            userRanks.sort(comparator);
-                            for (int i = 0; i < sortStep; i++) {
-                                userRanks.remove(userCount);
-                            }
-                        }
-                    }
-
-                    // sort
-                    userRanks.sort(comparator);
-
-                    // search for username
-                    userRanks.forEach(userRank -> {
-                        try {
-                            List<UserRank> searchResults = search(userRank.getUserID(), 1, Indexer.INDEX_FILED_USER_ID);
-                            userRank.setUsername(searchResults.get(0).getUsername());
-                        } catch (Exception e) {
-                            logger.error("Exception: {}", e);
-                        }
-                    });
+        while ((bytesRef = termsEnum.next()) != null) {
+            String userID = bytesRef.utf8ToString();
+            UserRank userRank = new UserRank();
+            userRank.setUserID(userID);
+            userRank.setAnwseredCount(getTermFreq(Indexer.INDEX_FILED_USER_ID, userID));
+            userRanks.add(userRank);
+            count++;
+            // sort
+            if (count == userCount+sortStep) {
+                count -= sortStep;
+                userRanks.sort(comparator);
+                for (int i = 0; i < sortStep; i++) {
+                    userRanks.remove(userCount);
                 }
             }
         }
+
+        // sort
+        userRanks.sort(comparator);
+
+        // search for username
+        userRanks.forEach(userRank -> {
+            try {
+                List<UserRank> searchResults = search(userRank.getUserID(), 10000, Indexer.INDEX_FILED_USER_ID);
+                for(UserRank r: searchResults) {
+                    String username = r.getUsername();
+                    if (!StringUtils.isEmpty(username)) {
+                        userRank.setUsername(username);
+                        break;
+                    }
+                }
+            } catch (Exception e) {
+                logger.error("Exception: {}", e);
+            }
+        });
         return userRanks;
     }
 

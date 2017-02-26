@@ -1,6 +1,7 @@
 package ci6226.ira.g14.app.language.trend.core.indexer;
 
 import ci6226.ira.g14.common.core.indexer.AbstractIndexer;
+import ci6226.ira.g14.common.core.indexer.IndexerCondition;
 import ci6226.ira.g14.common.core.indexer.IndexerConfig;
 import ci6226.ira.g14.common.model.Post;
 import lombok.Getter;
@@ -12,6 +13,7 @@ import org.apache.lucene.index.IndexWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Conditional;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
@@ -25,6 +27,7 @@ import java.util.List;
  * @author Zhou Shengsheng
  */
 @Component
+@Conditional(IndexerCondition.class)
 @ConfigurationProperties(prefix = "indexer")
 @Getter
 @Setter
@@ -70,6 +73,7 @@ public class Indexer extends AbstractIndexer {
         // close all index writers
         indexWriters.forEach(indexWriter -> {
             try {
+                indexWriter.commit();
                 indexWriter.close();
             } catch (IOException e) {
                 logger.error("IOException: {}", e);

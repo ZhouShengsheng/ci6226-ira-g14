@@ -1,8 +1,6 @@
 package ci6226.ira.g14.common.core.indexer;
 
 import ci6226.ira.g14.common.model.Post;
-import lombok.Getter;
-import lombok.Setter;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.IndexWriter;
 import org.slf4j.Logger;
@@ -30,9 +28,6 @@ public abstract class AbstractIndexer {
 
     private static final Logger logger = LoggerFactory.getLogger(AbstractIndexer.class);
 
-    // whether to perform indexing or not
-    @Getter @Setter private boolean willIndex;
-
     // whether the indexing process is done
     protected AtomicBoolean indexed;
 
@@ -50,24 +45,21 @@ public abstract class AbstractIndexer {
      */
     @PostConstruct
     private void init() {
+        logger.info("initializing indexer");
         indexed = new AtomicBoolean(false);
-        if (willIndex) {
-            // index in a separated thread
-            ExecutorService executorService = Executors.newSingleThreadExecutor();
-            executorService.submit(() -> {
-                try {
-                    preProcess();
-                    process();
-                    destroy();
-                    indexed.set(true);
-                    executorService.shutdown();
-                } catch (IOException e) {
-                    logger.error("IOException: {}", e);
-                }
-            });
-        } else {
-            indexed.set(true);
-        }
+        // index in a separated thread
+        ExecutorService executorService = Executors.newSingleThreadExecutor();
+        executorService.submit(() -> {
+            try {
+                preProcess();
+                process();
+                destroy();
+                indexed.set(true);
+                executorService.shutdown();
+            } catch (IOException e) {
+                logger.error("IOException: {}", e);
+            }
+        });
     }
 
     /**
@@ -77,6 +69,7 @@ public abstract class AbstractIndexer {
     private void destroy() throws IOException {
         preDestroy();
         dataReader.close();
+        indexWriter.commit();
         indexWriter.close();
     }
 
@@ -95,6 +88,7 @@ public abstract class AbstractIndexer {
     protected void process() throws IOException {
         logger.info("Starting indexing");
         String line;
+        long docNum = 0;
         while ((line = dataReader.readLine()) != null) {
             try {
                 // convert xml string to object
@@ -106,6 +100,7 @@ public abstract class AbstractIndexer {
                         if (indexWriter != null) {
                             logger.info("Indexing document with id: {}", post.getId());
                             indexWriter.addDocument(getDocumentFromPost(post));
+                            docNum++;
                         }
                     } catch (IOException e) {
                         logger.error("IOException: {}", e);
@@ -117,7 +112,7 @@ public abstract class AbstractIndexer {
         }
 
         logger.info("Finished indexing");
-        logger.info("Total documents indexed: {}", indexWriter.maxDoc());
+        logger.info("Total documents indexed: {}", docNum);
     }
 
     /**

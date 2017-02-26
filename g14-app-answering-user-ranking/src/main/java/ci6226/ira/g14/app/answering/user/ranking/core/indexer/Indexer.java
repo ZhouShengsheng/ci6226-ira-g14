@@ -1,6 +1,7 @@
 package ci6226.ira.g14.app.answering.user.ranking.core.indexer;
 
 import ci6226.ira.g14.common.core.indexer.AbstractIndexer;
+import ci6226.ira.g14.common.core.indexer.IndexerCondition;
 import ci6226.ira.g14.common.model.Post;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,6 +11,7 @@ import org.apache.lucene.document.TextField;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.annotation.Conditional;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
@@ -19,6 +21,7 @@ import org.springframework.util.StringUtils;
  * @author Zhou Shengsheng
  */
 @Component
+@Conditional(IndexerCondition.class)
 @ConfigurationProperties(prefix = "indexer")
 @Getter
 @Setter

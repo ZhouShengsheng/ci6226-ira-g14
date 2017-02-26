@@ -10,6 +10,7 @@ import org.springframework.beans.factory.config.BeanDefinition;
 import org.springframework.context.annotation.Scope;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.IOException;
@@ -31,9 +32,9 @@ public class APIController {
 	private Searcher searcher;
 
 	@GetMapping(value = "/user_ranking")
-	public List<UserRank> getUserRanking() throws IOException {
+	public List<UserRank> getUserRanking(@RequestParam int userCount) throws IOException {
 	    logger.info("getUserRanking");
-		return searcher.getAnsweringUserRank();
+		return searcher.getAnsweringUserRank(userCount);
 	}
 	
 }
