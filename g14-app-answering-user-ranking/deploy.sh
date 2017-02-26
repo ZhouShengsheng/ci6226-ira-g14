@@ -1,15 +1,16 @@
 #!/bin/sh
-# desc: Search engine deployment script.
-# author: Zhou Shengsheng
+# Desc: Language trend application deployment script.
+# Author: Zhou Shengsheng
 
 # configurations
 SSH_SERVER=shengsheng@155.69.149.197
-JAR_FILE=target/g14-search-engine.jar
-REMOTE_DIR=/home/shengsheng/Workspaces/IR/search-engine
+APP_NAME=app-user-ranking
+JAR_FILE=target/g14-${APP_NAME}.jar
+REMOTE_DIR=/home/shengsheng/Workspaces/IR/projects/${APP_NAME}
 SERVER_SH=server.sh
 
 # build
-mvn clean install -DskipTests
+mvn clean package -DskipTests
 
 # create remote directory
 ssh ${SSH_SERVER} "mkdir -p ${REMOTE_DIR}"

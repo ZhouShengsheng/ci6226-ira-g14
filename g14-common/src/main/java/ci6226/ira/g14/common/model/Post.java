@@ -15,6 +15,9 @@ import javax.xml.bind.annotation.XmlRootElement;
 @XmlAccessorType(XmlAccessType.NONE)
 public class Post {
 
+	// Post type
+	public static final int POST_TYPE_ANSWER = 2;
+
 	private String Id;
 	private String PostTypeId;
 	private String AcceptedAnswerId;

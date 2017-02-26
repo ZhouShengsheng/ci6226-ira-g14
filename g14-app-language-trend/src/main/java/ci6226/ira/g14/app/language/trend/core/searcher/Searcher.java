@@ -9,6 +9,8 @@ import lombok.Getter;
 import lombok.Setter;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.IndexReader;
+import org.apache.lucene.index.MultiFields;
+import org.apache.lucene.index.MultiTerms;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.search.ScoreDoc;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -72,6 +74,8 @@ public class Searcher extends AbstractSearcher<LanguageRank> {
                     // computer language rank of each year
                     for(int year = startYear; year <= endYear; year++) {
                         IndexReader indexReader = SearcherConfig.newIndexReader(String.format("%s/%d", indexPath, year));
+//                        // get all terms of a filed
+//                        MultiFields.getFields(indexReader).terms(Indexer.INDEX_FILED_TITLE).iterator();
                         List<LanguageRank> ranks = new ArrayList<>();
                         for (String language: languageList) {
                             long popularity = getTermFreq(indexReader, Indexer.INDEX_FILED_TITLE, language)
