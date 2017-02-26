@@ -11,6 +11,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
 
+import javax.naming.directory.SearchControls;
 import java.io.IOException;
 import java.nio.file.Paths;
 
@@ -27,11 +28,15 @@ import java.nio.file.Paths;
 public class SearcherConfig {
 
 	private String indexPath;
-	
+
+	public static IndexReader newIndexReader(String indexPath) throws IOException {
+        return DirectoryReader.open(NIOFSDirectory.open(Paths.get(indexPath)));
+    }
+
 	@Bean
 	@Lazy
 	IndexReader indexReader() throws IOException {
-        return DirectoryReader.open(NIOFSDirectory.open(Paths.get(indexPath)));
+        return SearcherConfig.newIndexReader(indexPath);
 	}
 
 	@Bean

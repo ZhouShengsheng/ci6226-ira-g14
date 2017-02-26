@@ -1,5 +1,6 @@
 package ci6226.ira.g14.app.language.trend.core.indexer;
 
+import ci6226.ira.g14.app.language.trend.core.searcher.Searcher;
 import ci6226.ira.g14.common.core.indexer.AbstractIndexer;
 import ci6226.ira.g14.common.core.indexer.IndexerConfig;
 import ci6226.ira.g14.common.model.Post;
@@ -11,6 +12,7 @@ import org.apache.lucene.document.TextField;
 import org.apache.lucene.index.IndexWriter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -52,6 +54,9 @@ public class Indexer extends AbstractIndexer {
 
     // separated index writers for each year
     private List<IndexWriter> indexWriters;
+
+    @Autowired
+    Searcher searcher;
 
     @Override
     public void preProcess() {

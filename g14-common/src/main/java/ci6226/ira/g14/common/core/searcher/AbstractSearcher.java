@@ -23,6 +23,7 @@ import java.util.List;
  * @author Zhou Shengsheng
  *
  */
+
 public abstract class AbstractSearcher<T> {
 	
 	// search fields

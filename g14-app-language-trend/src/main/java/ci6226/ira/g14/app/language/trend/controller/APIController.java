@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -28,7 +29,7 @@ public class APIController {
 	private Searcher searcher;
 
 	@GetMapping(value = "/language_trend")
-	public Map<String, Object> getLanguageTrend() {
+	public Map<String, Object> getLanguageTrend() throws IOException {
 		return searcher.getLanguageRank();
 	}
 	
