@@ -5,13 +5,15 @@ import lombok.Setter;
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.search.IndexSearcher;
-import org.apache.lucene.store.NIOFSDirectory;
+import org.apache.lucene.store.FSDirectory;
+import org.apache.lucene.store.IOContext;
+import org.apache.lucene.store.MMapDirectory;
+import org.apache.lucene.store.RAMDirectory;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
 
-import javax.naming.directory.SearchControls;
 import java.io.IOException;
 import java.nio.file.Paths;
 
@@ -30,7 +32,8 @@ public class SearcherConfig {
 	private String indexPath;
 
 	public static IndexReader newIndexReader(String indexPath) throws IOException {
-        return DirectoryReader.open(NIOFSDirectory.open(Paths.get(indexPath)));
+//        return DirectoryReader.open(new RAMDirectory(FSDirectory.open(Paths.get(indexPath)), IOContext.DEFAULT));
+        return DirectoryReader.open(MMapDirectory.open(Paths.get(indexPath)));
     }
 
 	@Bean

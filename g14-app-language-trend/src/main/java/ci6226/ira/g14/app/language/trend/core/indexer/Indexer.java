@@ -48,7 +48,11 @@ public class Indexer extends AbstractIndexer {
     public void preProcess() {
         // created index writers
         try {
-            years = endYear - startYear;
+            years = endYear - startYear + 1;
+            if (years <= 0) {
+                logger.error("endYear must >= startYear");
+                System.exit(-1);
+            }
             indexWriters = new ArrayList<>(years);
             for (int i = 0; i < years; i++) {
                 int year = startYear + i;
