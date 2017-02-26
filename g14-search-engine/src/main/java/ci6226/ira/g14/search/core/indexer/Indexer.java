@@ -40,7 +40,7 @@ public class Indexer extends AbstractIndexer {
     @Override
     public void preProcess() {
         // convert indexTags string into a list of tags
-        List<String> indexTagList = Arrays.stream(indexTags.toLowerCase().split(",")).collect(Collectors.toList());
+        List<String> indexTagList = Arrays.stream(indexTags.replace(" ", "").toLowerCase().split(",")).collect(Collectors.toList());
         indexTagListWithBorder = indexTagList.stream().map(tag -> String.format("<%s>", tag)).collect(Collectors.toList()); // eg: <java>
         indexTagListRegexPaterns = indexTagList.stream().map(tag -> String.format(".*\\b%s\\b.*", tag)).collect(Collectors.toList()); // eg: .*\bjava\b.*
         logger.info("Will index documents with tags: {}", indexTags);

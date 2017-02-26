@@ -90,17 +90,10 @@ public abstract class AbstractIndexer {
 
     /**
      * Read documents and index them.
-     *
      * @throws IOException
      */
     protected void process() throws IOException {
         logger.info("Starting indexing");
-        index(dataReader, indexWriter);
-        logger.info("Finished indexing");
-        logger.info("Total documents indexed: {}", indexWriter.maxDoc());
-    }
-
-    protected void index(BufferedReader dataReader, IndexWriter indexWriter) throws IOException {
         String line;
         while ((line = dataReader.readLine()) != null) {
             try {
@@ -109,8 +102,11 @@ public abstract class AbstractIndexer {
                 if (willIndexPost(post)) {
                     // index the post
                     try {
-                        logger.info("Indexing document with id: {}", post.getId());
-                        indexWriter.addDocument(getDocumentFromPost(post));
+                        IndexWriter indexWriter = getIndexWriter(post);
+                        if (indexWriter != null) {
+                            logger.info("Indexing document with id: {}", post.getId());
+                            indexWriter.addDocument(getDocumentFromPost(post));
+                        }
                     } catch (IOException e) {
                         logger.error("IOException: {}", e);
                     }
@@ -119,6 +115,18 @@ public abstract class AbstractIndexer {
                 logger.error("JAXBException: {}", e);
             }
         }
+
+        logger.info("Finished indexing");
+        logger.info("Total documents indexed: {}", indexWriter.maxDoc());
+    }
+
+    /**
+     * Get index writer for specific post and parameters.
+     * @param post
+     * @return
+     */
+    protected IndexWriter getIndexWriter(Post post) {
+        return indexWriter;
     }
 
     /**
@@ -133,7 +141,6 @@ public abstract class AbstractIndexer {
 
     /**
      * Check if the post will be indexed.
-     *
      * @param post
      * @return
      */

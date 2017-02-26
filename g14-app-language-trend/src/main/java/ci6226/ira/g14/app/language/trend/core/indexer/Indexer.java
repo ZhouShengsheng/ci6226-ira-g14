@@ -15,10 +15,13 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
+import javax.xml.bind.JAXBException;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -44,56 +47,55 @@ public class Indexer extends AbstractIndexer {
 
     private int startYear;
     private int endYear;
+    private int years;
     private String indexPath;
 
-    // post tags to be indexed
-    private String indexTags;
-    private List<String> indexTagList;
+    // separated index writers for each year
+    private List<IndexWriter> indexWriters;
 
     @Override
     public void preProcess() {
-        // convert indexTags string into a list of tags
-        indexTagList = Arrays.stream(indexTags.toLowerCase().split(",")).map(tag -> String.format("<%s>", tag)).collect(Collectors.toList());
-        logger.info("Will index documents with tags: {}", indexTags);
+        // created index writers
+        try {
+            years = endYear - startYear;
+            indexWriters = new ArrayList<>(years);
+            for (int i = 0; i < years; i++) {
+                int year = startYear + i;
+                IndexWriter indexWriter = IndexerConfig.newIndexWriter(String.format("%s/%d", indexPath, year)); // path/2008 path/2009 ...
+                indexWriters.add(indexWriter);
+            }
+        } catch (IOException e) {
+            logger.error("IOException: {}", e);
+            System.exit(-1);
+        }
     }
 
     @Override
     public void preDestroy() {
-    }
-
-    /**
-     * Read documents index each year.
-     *
-     * @throws IOException
-     */
-    protected void process() throws IOException {
-        int years = endYear - startYear;
-        ExecutorService executorService = Executors.newWorkStealingPool();
-        List<Future<Boolean>> futures = new ArrayList<>(years);
-        for (int i = 0; i < years; i++) {
-            int year = startYear + i;
-            Future<Boolean> future = executorService.submit(() -> {
-                logger.info("Starting indexing documents in year {}", year);
-                BufferedReader dataReader = IndexerConfig.newDataReader();
-                IndexWriter indexWriter = IndexerConfig.newIndexWriter(String.format("%s/%d", indexPath, year)); // path/2008 path/2009 ...
-                index(dataReader, indexWriter);
-                dataReader.close();
-                indexWriter.close();
-                logger.info("Finished indexing documents in year {}", year);
-                logger.info("Total documents in year {} indexed: {}", year, indexWriter.maxDoc());
-                return true;
-            });
-            futures.add(future);
-        }
-        // wait until all of the threads are done
-        futures.forEach(future -> {
+        // close all index writers
+        indexWriters.forEach(indexWriter -> {
             try {
-                future.get();
-            } catch (Exception e) {
-                logger.error("Exception: {}", e);
+                indexWriter.close();
+            } catch (IOException e) {
+                logger.error("IOException: {}", e);
             }
         });
+        indexWriters.clear();
+    }
 
+    @Override
+    protected IndexWriter getIndexWriter(Post post) {
+        String creationDate = post.getCreationDate();
+        if (StringUtils.isEmpty(creationDate)) {
+            return null;
+        }
+        String year = post.getCreationDate().substring(0, 4);
+        for (int i = 0; i < years; i++) {
+            if (startYear +i == Integer.valueOf(year)) {
+                return indexWriters.get(i);
+            }
+        }
+        return null;
     }
 
     @Override

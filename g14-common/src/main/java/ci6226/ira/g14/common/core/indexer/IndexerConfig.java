@@ -57,7 +57,7 @@ public class IndexerConfig {
 			path.mkdirs();
 		}
 		Directory dir = FSDirectory.open(Paths.get(indexPath));
-		CharArraySet set = new CharArraySet(Arrays.stream(stopWordsStatic.split(",")).collect(Collectors.toSet()), true);
+		CharArraySet set = new CharArraySet(Arrays.stream(stopWordsStatic.replace(" ", "").split(",")).collect(Collectors.toSet()), true);
 		Analyzer analyzer = new EnglishAnalyzer(set);
 		IndexWriterConfig cfg = new IndexWriterConfig(analyzer);
 		cfg.setOpenMode(OpenMode.CREATE);
@@ -90,8 +90,7 @@ public class IndexerConfig {
 	@Bean
 	public Unmarshaller postUnmarshaller() throws JAXBException {
 		JAXBContext jaxbContext = JAXBContext.newInstance(Post.class);  
-        Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
-        return unmarshaller;
+        return jaxbContext.createUnmarshaller();
 	}
 	
 	@Bean
