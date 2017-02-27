@@ -3,9 +3,7 @@ package ci6226.ira.g14.app.answering.user.ranking.core.searcher;
 
 import ci6226.ira.g14.app.answering.user.ranking.core.indexer.Indexer;
 import ci6226.ira.g14.app.answering.user.ranking.model.UserRank;
-import ci6226.ira.g14.common.core.searcher.AbstractSearcher;
-import lombok.Getter;
-import lombok.Setter;
+import ci6226.ira.g14.common.core.searcher.BaseSearcher;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.*;
 import org.apache.lucene.search.ScoreDoc;
@@ -29,7 +27,7 @@ import java.util.*;
 @Component
 @Lazy
 @ConfigurationProperties(prefix = "indexer")
-public class Searcher extends AbstractSearcher<UserRank> {
+public class Searcher extends BaseSearcher<UserRank> {
 
     private static final Logger logger = LoggerFactory.getLogger(Searcher.class);
 

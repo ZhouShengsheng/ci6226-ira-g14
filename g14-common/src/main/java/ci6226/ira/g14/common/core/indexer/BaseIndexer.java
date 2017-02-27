@@ -24,9 +24,9 @@ import java.util.concurrent.atomic.AtomicBoolean;
  * @author Zhou Shengsheng
  */
 @ConfigurationProperties(prefix = "indexer")
-public abstract class AbstractIndexer {
+public abstract class BaseIndexer {
 
-    private static final Logger logger = LoggerFactory.getLogger(AbstractIndexer.class);
+    private static final Logger logger = LoggerFactory.getLogger(BaseIndexer.class);
 
     // whether the indexing process is done
     protected AtomicBoolean indexed;
@@ -53,11 +53,16 @@ public abstract class AbstractIndexer {
             try {
                 preProcess();
                 process();
-                destroy();
-                indexed.set(true);
-                executorService.shutdown();
             } catch (IOException e) {
                 logger.error("IOException: {}", e);
+            } finally {
+                try {
+                    destroy();
+                } catch (IOException e) {
+                    logger.error("IOException: {}", e);
+                }
+                indexed.set(true);
+                executorService.shutdown();
             }
         });
     }

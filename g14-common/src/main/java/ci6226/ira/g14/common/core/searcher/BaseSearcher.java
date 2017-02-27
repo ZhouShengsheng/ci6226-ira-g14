@@ -24,7 +24,7 @@ import java.util.List;
  *
  */
 
-public abstract class AbstractSearcher<T> {
+public abstract class BaseSearcher<T> {
 	
 	// search fields
 	public static final String SEARCH_FIELD_ALL = "all";

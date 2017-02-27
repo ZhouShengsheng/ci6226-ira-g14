@@ -1,6 +1,6 @@
 package ci6226.ira.g14.search.core.indexer;
 
-import ci6226.ira.g14.common.core.indexer.AbstractIndexer;
+import ci6226.ira.g14.common.core.indexer.BaseIndexer;
 import ci6226.ira.g14.common.core.indexer.IndexerCondition;
 import ci6226.ira.g14.common.model.Post;
 import lombok.Getter;
@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
 @Component
 @Conditional(IndexerCondition.class)
 @ConfigurationProperties(prefix = "indexer")
-public class Indexer extends AbstractIndexer {
+public class Indexer extends BaseIndexer {
 
     private static final Logger logger = LoggerFactory.getLogger(Indexer.class);
 

@@ -1,6 +1,6 @@
 package ci6226.ira.g14.app.answering.user.ranking.core.indexer;
 
-import ci6226.ira.g14.common.core.indexer.AbstractIndexer;
+import ci6226.ira.g14.common.core.indexer.BaseIndexer;
 import ci6226.ira.g14.common.core.indexer.IndexerCondition;
 import ci6226.ira.g14.common.model.Post;
 import lombok.Getter;
@@ -25,7 +25,7 @@ import org.springframework.util.StringUtils;
 @ConfigurationProperties(prefix = "indexer")
 @Getter
 @Setter
-public class Indexer extends AbstractIndexer {
+public class Indexer extends BaseIndexer {
 
     private static final Logger logger = LoggerFactory.getLogger(Indexer.class);
 

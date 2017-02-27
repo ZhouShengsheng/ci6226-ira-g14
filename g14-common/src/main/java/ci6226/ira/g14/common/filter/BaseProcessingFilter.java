@@ -1,6 +1,6 @@
 package ci6226.ira.g14.common.filter;
 
-import ci6226.ira.g14.common.core.indexer.AbstractIndexer;
+import ci6226.ira.g14.common.core.indexer.BaseIndexer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ public class BaseProcessingFilter implements Filter {
 	private final static Logger logger = LoggerFactory.getLogger(BaseProcessingFilter.class);
 
 	@Autowired
-    AbstractIndexer indexer;
+	BaseIndexer indexer;
 
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
@@ -35,7 +35,7 @@ public class BaseProcessingFilter implements Filter {
             response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 			response.setHeader("Content-Type", "application/json;charset=UTF-8");
 			PrintWriter pw = response.getWriter();
-			pw.println("{\"message\":\"Search engine is currently indexing.\"}");
+			pw.println("{\"message\":\"Currently indexing.\"}");
 			pw.close();
 		} else {
 			filterChain.doFilter(servletRequest, servletResponse);

@@ -3,14 +3,12 @@ package ci6226.ira.g14.app.language.trend.core.searcher;
 
 import ci6226.ira.g14.app.language.trend.core.indexer.Indexer;
 import ci6226.ira.g14.app.language.trend.model.LanguageRank;
-import ci6226.ira.g14.common.core.searcher.AbstractSearcher;
+import ci6226.ira.g14.common.core.searcher.BaseSearcher;
 import ci6226.ira.g14.common.core.searcher.SearcherConfig;
 import lombok.Getter;
 import lombok.Setter;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.IndexReader;
-import org.apache.lucene.index.MultiFields;
-import org.apache.lucene.index.MultiTerms;
 import org.apache.lucene.index.Term;
 import org.apache.lucene.search.ScoreDoc;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -32,7 +30,7 @@ import java.util.stream.Collectors;
 @ConfigurationProperties(prefix = "indexer")
 @Getter
 @Setter
-public class Searcher extends AbstractSearcher<LanguageRank> {
+public class Searcher extends BaseSearcher<LanguageRank> {
 
     private String indexPath;
     private String rankLanguages;

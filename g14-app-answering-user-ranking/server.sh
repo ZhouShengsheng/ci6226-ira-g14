@@ -18,7 +18,7 @@ cd $SERVICE_DIR
 case "$1" in
 
     start)
-        nohup $JRE_HOME/bin/java -Xms2g -Xmx4g -jar -Dspring.profiles.active=prod $JAR_NAME >/dev/null 2>&1 &
+        nohup $JRE_HOME/bin/java -Xms1g -Xmx2g -jar -Dspring.profiles.active=prod $JAR_NAME >/dev/null 2>&1 &
         echo $! > $SERVICE_DIR/$PID
         echo "=== starting $SERVICE_NAME"
         ;;

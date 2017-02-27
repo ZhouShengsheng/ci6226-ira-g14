@@ -1,6 +1,6 @@
 package ci6226.ira.g14.app.language.trend.core.indexer;
 
-import ci6226.ira.g14.common.core.indexer.AbstractIndexer;
+import ci6226.ira.g14.common.core.indexer.BaseIndexer;
 import ci6226.ira.g14.common.core.indexer.IndexerCondition;
 import ci6226.ira.g14.common.core.indexer.IndexerConfig;
 import ci6226.ira.g14.common.model.Post;
@@ -31,7 +31,7 @@ import java.util.List;
 @ConfigurationProperties(prefix = "indexer")
 @Getter
 @Setter
-public class Indexer extends AbstractIndexer {
+public class Indexer extends BaseIndexer {
 
     private static final Logger logger = LoggerFactory.getLogger(Indexer.class);
 

@@ -1,6 +1,6 @@
 package ci6226.ira.g14.search.core.searcher;
 
-import ci6226.ira.g14.common.core.searcher.AbstractSearcher;
+import ci6226.ira.g14.common.core.searcher.BaseSearcher;
 import ci6226.ira.g14.search.core.indexer.Indexer;
 import ci6226.ira.g14.search.model.Result;
 import org.apache.lucene.document.Document;
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @Lazy
-public class Searcher extends AbstractSearcher<Result> {
+public class Searcher extends BaseSearcher<Result> {
 
     @Override
     public void preProcess() {
