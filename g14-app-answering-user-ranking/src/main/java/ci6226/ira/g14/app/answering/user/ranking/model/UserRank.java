@@ -1,9 +1,11 @@
 package ci6226.ira.g14.app.answering.user.ranking.model;
 
+import java.io.Serializable;
+
 /**
  * User rank model.
  */
-public class UserRank {
+public class UserRank implements Serializable {
 
     private String userID;
     private String username;

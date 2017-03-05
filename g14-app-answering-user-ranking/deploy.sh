@@ -3,7 +3,7 @@
 # Author: Zhou Shengsheng
 
 # configurations
-SSH_SERVER=shengsheng@155.69.149.197
+SSH_SERVER=shengsheng@155.69.150.182
 APP_NAME=app-answering-user-ranking
 JAR_FILE=target/g14-${APP_NAME}.jar
 REMOTE_DIR=/home/shengsheng/Workspaces/IR/projects/${APP_NAME}

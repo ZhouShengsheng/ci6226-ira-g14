@@ -4,8 +4,13 @@ package ci6226.ira.g14.app.answering.user.ranking.core.searcher;
 import ci6226.ira.g14.app.answering.user.ranking.core.indexer.Indexer;
 import ci6226.ira.g14.app.answering.user.ranking.model.UserRank;
 import ci6226.ira.g14.common.core.searcher.BaseSearcher;
+import lombok.Getter;
+import lombok.Setter;
 import org.apache.lucene.document.Document;
-import org.apache.lucene.index.*;
+import org.apache.lucene.index.Fields;
+import org.apache.lucene.index.MultiFields;
+import org.apache.lucene.index.Term;
+import org.apache.lucene.index.TermsEnum;
 import org.apache.lucene.search.ScoreDoc;
 import org.apache.lucene.util.BytesRef;
 import org.slf4j.Logger;
@@ -15,12 +20,14 @@ import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
-import java.io.IOException;
-import java.util.*;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 
 /**
- * Post searcher.
- * 
+ * User ranking searcher.
+ *
  * @author Zhou Shengsheng
  *
  */
@@ -31,8 +38,40 @@ public class Searcher extends BaseSearcher<UserRank> {
 
     private static final Logger logger = LoggerFactory.getLogger(Searcher.class);
 
+    // max user count allowed in the ranking list
+    @Getter @Setter private int maxUserCount;
+
+    // ranking file
+    @Getter @Setter private String rankingFile;
+
+    // cached ranking list
+    private List<UserRank> rankingList;
+
+    @SuppressWarnings("unchecked")
     @Override
     public void preProcess() {
+        try {
+            File file = new File(rankingFile);
+            if (file.exists()) {
+                // load ranking list from file
+                logger.info("loading ranking list from file");
+                ObjectInputStream ois = new ObjectInputStream(new FileInputStream(file));
+                rankingList = (List<UserRank>)ois.readObject();
+                ois.close();
+            } else {
+                // get ranking list and save to local file
+                logger.info("saving ranking list from file");
+                getAnsweringUserRank(maxUserCount);
+                file.getParentFile().mkdirs();
+                ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file));
+                oos.writeObject(rankingList);
+                oos.close();
+            }
+        } catch (IOException e) {
+            logger.error("IOException: {}", e);
+        } catch (ClassNotFoundException e) {
+            logger.error("ClassNotFoundException: {}", e);
+        }
     }
 
     @Override
@@ -56,52 +95,64 @@ public class Searcher extends BaseSearcher<UserRank> {
      */
     public List<UserRank> getAnsweringUserRank(int userCount) throws IOException {
         int sortStep = 10;
-        List<UserRank> userRanks = new ArrayList<>(userCount+sortStep);
-        // get all terms of a filed
-        Fields fileds = MultiFields.getFields(indexReader);
-        TermsEnum termsEnum = fileds.terms(Indexer.INDEX_FILED_USER_ID).iterator();
-        BytesRef bytesRef;
-        int count = 0;
+        if (rankingList == null) {
+            rankingList = new ArrayList<>(maxUserCount+sortStep);
 
-        // sort comparator
-        Comparator<? super UserRank> comparator = (r1, r2) -> r1.getAnwseredCount() >= r2.getAnwseredCount() ? -1 : 1;
+            // get all terms of a filed
+            Fields fields = MultiFields.getFields(indexReader);
+            TermsEnum termsEnum = fields.terms(Indexer.INDEX_FILED_USER_ID).iterator();
+            BytesRef bytesRef;
+            int count = 0;
 
-        while ((bytesRef = termsEnum.next()) != null) {
-            String userID = bytesRef.utf8ToString();
-            UserRank userRank = new UserRank();
-            userRank.setUserID(userID);
-            userRank.setAnwseredCount(getTermFreq(Indexer.INDEX_FILED_USER_ID, userID));
-            userRanks.add(userRank);
-            count++;
-            // sort
-            if (count == userCount+sortStep) {
-                count -= sortStep;
-                userRanks.sort(comparator);
-                for (int i = 0; i < sortStep; i++) {
-                    userRanks.remove(userCount);
-                }
-            }
-        }
+            // sort comparator
+            Comparator<? super UserRank> comparator = (r1, r2) -> {
+                long r1Count = r1.getAnwseredCount();
+                long r2Count = r2.getAnwseredCount();
+                return (r1Count < r2Count) ? 1 : ((r1Count == r2Count) ? 0 : -1);
+            };
 
-        // sort
-        userRanks.sort(comparator);
-
-        // search for username
-        userRanks.forEach(userRank -> {
-            try {
-                List<UserRank> searchResults = search(userRank.getUserID(), 10000, Indexer.INDEX_FILED_USER_ID);
-                for(UserRank r: searchResults) {
-                    String username = r.getUsername();
-                    if (!StringUtils.isEmpty(username)) {
-                        userRank.setUsername(username);
-                        break;
+            while ((bytesRef = termsEnum.next()) != null) {
+                String userID = bytesRef.utf8ToString();
+                UserRank userRank = new UserRank();
+                userRank.setUserID(userID);
+                userRank.setAnwseredCount(getTermFreq(Indexer.INDEX_FILED_USER_ID, userID));
+                rankingList.add(userRank);
+                count++;
+                // sort
+                if (count == maxUserCount+sortStep) {
+                    count -= sortStep;
+                    rankingList.sort(comparator);
+                    for (int i = 0; i < sortStep; i++) {
+                        rankingList.remove(maxUserCount);
                     }
                 }
-            } catch (Exception e) {
-                logger.error("Exception: {}", e);
             }
-        });
-        return userRanks;
+
+            // sort
+            rankingList.sort(comparator);
+
+            // search for username
+            rankingList.forEach(userRank -> {
+                try {
+                    List<UserRank> searchResults = search(userRank.getUserID(), 1000, Indexer.INDEX_FILED_USER_ID);
+                    for(UserRank r: searchResults) {
+                        String username = r.getUsername();
+                        if (!StringUtils.isEmpty(username)) {
+                            userRank.setUsername(username);
+                            break;
+                        }
+                    }
+                } catch (Exception e) {
+                    logger.error("Exception: {}", e);
+                }
+            });
+        }
+
+        if (userCount > maxUserCount) {
+            return null;
+        }
+
+        return rankingList.subList(0, userCount);
     }
 
     @Override

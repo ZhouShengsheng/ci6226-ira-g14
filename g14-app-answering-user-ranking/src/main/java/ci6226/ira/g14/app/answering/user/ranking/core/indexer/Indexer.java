@@ -1,5 +1,6 @@
 package ci6226.ira.g14.app.answering.user.ranking.core.indexer;
 
+import ci6226.ira.g14.app.answering.user.ranking.core.searcher.Searcher;
 import ci6226.ira.g14.common.core.indexer.BaseIndexer;
 import ci6226.ira.g14.common.core.indexer.IndexerCondition;
 import ci6226.ira.g14.common.model.Post;
@@ -10,7 +11,9 @@ import org.apache.lucene.document.Field;
 import org.apache.lucene.document.TextField;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Conditional;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
@@ -33,12 +36,17 @@ public class Indexer extends BaseIndexer {
     public static final String INDEX_FILED_USER_ID = "userId";
     public static final String INDEX_FILED_USER_NAME = "userName";
 
+    @Autowired
+    private ApplicationContext applicationContext;
+
     @Override
     public void preProcess() {
     }
 
     @Override
     public void preDestroy() {
+        // trigger Searcher lifecycle to prepare ranking list
+        applicationContext.getBean(Searcher.class);
     }
 
     @Override
