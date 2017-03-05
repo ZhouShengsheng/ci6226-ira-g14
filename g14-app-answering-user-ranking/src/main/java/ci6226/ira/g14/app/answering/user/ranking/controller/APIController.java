@@ -29,8 +29,11 @@ public class APIController {
 	private Searcher searcher;
 
 	@GetMapping(value = "/user_ranking")
-	public List<UserRank> getUserRanking(@RequestParam int userCount) throws IOException {
+	public List<UserRank> getUserRanking(@RequestParam int userCount) throws Exception {
 	    logger.info("getUserRanking");
+	    if (userCount > searcher.getMaxUserCount()) {
+	        throw new Exception(String.format("%d is larger than max allowed user count %d", userCount, searcher.getMaxUserCount()));
+        }
 		return searcher.getAnsweringUserRank(userCount);
 	}
 	

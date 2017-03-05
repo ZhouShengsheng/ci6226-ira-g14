@@ -31,18 +31,20 @@ import java.util.List;
  * @author Zhou Shengsheng
  *
  */
+@ConfigurationProperties(prefix = "lucene")
 @Component
 @Lazy
-@ConfigurationProperties(prefix = "lucene")
+@Getter
+@Setter
 public class Searcher extends BaseSearcher<UserRank> {
 
     private static final Logger logger = LoggerFactory.getLogger(Searcher.class);
 
     // max user count allowed in the ranking list
-    @Getter @Setter private int maxUserCount;
+    private int maxUserCount;
 
     // ranking file
-    @Getter @Setter private String rankingFile;
+    private String rankingFile;
 
     // cached ranking list
     private List<UserRank> rankingList;
@@ -134,7 +136,7 @@ public class Searcher extends BaseSearcher<UserRank> {
             // search for username
             rankingList.forEach(userRank -> {
                 try {
-                    List<UserRank> searchResults = search(userRank.getUserID(), 1000, Indexer.INDEX_FILED_USER_ID);
+                    List<UserRank> searchResults = search(userRank.getUserID(), 20000, Indexer.INDEX_FILED_USER_ID);
                     for(UserRank r: searchResults) {
                         String username = r.getUsername();
                         if (!StringUtils.isEmpty(username)) {
@@ -161,5 +163,9 @@ public class Searcher extends BaseSearcher<UserRank> {
         userRank.setUserID(document.get(Indexer.INDEX_FILED_USER_ID));
         userRank.setUsername(document.get(Indexer.INDEX_FILED_USER_NAME));
         return userRank;
+    }
+
+    public int getMaxUserCount() {
+        return maxUserCount;
     }
 }
