@@ -14,4 +14,4 @@ lucene:
   dataFile: /Users/jackjones/Workspaces/IR/resources/Posts.xml
   indexPath: target/search-engine/index
   willIndex: false
-  indexTags: java, c, c++, python
+  indexTags: java, c, c++, cpp, python

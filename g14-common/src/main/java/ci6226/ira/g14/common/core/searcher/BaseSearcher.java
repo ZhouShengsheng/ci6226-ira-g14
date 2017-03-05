@@ -1,7 +1,5 @@
 package ci6226.ira.g14.common.core.searcher;
 
-import lombok.Getter;
-import lombok.Setter;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.IndexReader;
