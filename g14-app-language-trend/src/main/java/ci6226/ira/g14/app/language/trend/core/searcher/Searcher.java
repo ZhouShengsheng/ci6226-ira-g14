@@ -69,8 +69,6 @@ public class Searcher extends BaseSearcher<LanguageRank> {
         // computer language rank of each year
         for(int year = startYear; year <= endYear; year++) {
             IndexReader indexReader = SearcherConfig.newIndexReader(String.format("%s/%d", indexPath, year));
-//                        // get all terms of a filed
-//                        MultiFields.getFields(indexReader).terms(Indexer.INDEX_FILED_TITLE).iterator();
             List<LanguageRank> ranks = new ArrayList<>();
             for (String language: languageList) {
                 long popularity = getTermFreq(indexReader, Indexer.INDEX_FILED_TITLE, language)
