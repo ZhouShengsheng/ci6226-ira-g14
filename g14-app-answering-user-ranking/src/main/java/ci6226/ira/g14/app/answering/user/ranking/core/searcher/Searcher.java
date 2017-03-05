@@ -26,7 +26,7 @@ import java.util.*;
  */
 @Component
 @Lazy
-@ConfigurationProperties(prefix = "indexer")
+@ConfigurationProperties(prefix = "lucene")
 public class Searcher extends BaseSearcher<UserRank> {
 
     private static final Logger logger = LoggerFactory.getLogger(Searcher.class);

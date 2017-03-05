@@ -27,18 +27,14 @@ import java.util.stream.Collectors;
  */
 @Component
 @Lazy
-@ConfigurationProperties(prefix = "indexer")
+@ConfigurationProperties(prefix = "lucene")
 @Getter
 @Setter
 public class Searcher extends BaseSearcher<LanguageRank> {
 
     private String indexPath;
-    private String rankLanguages;
     private int startYear;
     private int endYear;
-    private int years;
-
-    private Map<String, Object> rankResult;
 
     @Override
     public void preProcess() {
@@ -61,33 +57,31 @@ public class Searcher extends BaseSearcher<LanguageRank> {
 
     /**
      * Compute language rank.
+     * @param rankLanguages
+     * @param startYear
+     * @param endYear
      * @return
+     * @throws IOException
      */
-    public Map<String, Object> getLanguageRank() throws IOException {
-        if (rankResult == null) {
-            synchronized (this) {
-                if (rankResult == null) {
-                    rankResult = new HashMap<>();
-                    List<String> languageList = Arrays.stream(rankLanguages.replace(" ", "").toLowerCase().split(",")).collect(Collectors.toList());
-                    // computer language rank of each year
-                    for(int year = startYear; year <= endYear; year++) {
-                        IndexReader indexReader = SearcherConfig.newIndexReader(String.format("%s/%d", indexPath, year));
+    public Map<String, Object> getLanguageRank(String rankLanguages, int startYear, int endYear) throws IOException {
+        Map<String, Object> rankResult = new HashMap<>();
+        List<String> languageList = Arrays.stream(rankLanguages.replace(" ", "").toLowerCase().split(",")).collect(Collectors.toList());
+        // computer language rank of each year
+        for(int year = startYear; year <= endYear; year++) {
+            IndexReader indexReader = SearcherConfig.newIndexReader(String.format("%s/%d", indexPath, year));
 //                        // get all terms of a filed
 //                        MultiFields.getFields(indexReader).terms(Indexer.INDEX_FILED_TITLE).iterator();
-                        List<LanguageRank> ranks = new ArrayList<>();
-                        for (String language: languageList) {
-                            long popularity = getTermFreq(indexReader, Indexer.INDEX_FILED_TITLE, language)
-                                    + getTermFreq(indexReader, Indexer.INDEX_FILED_BODY, language);
-                            LanguageRank rank = new LanguageRank();
-                            rank.setName(language);
-                            rank.setPopularity(popularity);
-                            ranks.add(rank);
-                        }
-                        indexReader.close();
-                        rankResult.put(String.valueOf(year), ranks);
-                    }
-                }
+            List<LanguageRank> ranks = new ArrayList<>();
+            for (String language: languageList) {
+                long popularity = getTermFreq(indexReader, Indexer.INDEX_FILED_TITLE, language)
+                        + getTermFreq(indexReader, Indexer.INDEX_FILED_BODY, language);
+                LanguageRank rank = new LanguageRank();
+                rank.setName(language);
+                rank.setPopularity(popularity);
+                ranks.add(rank);
             }
+            indexReader.close();
+            rankResult.put(String.valueOf(year), ranks);
         }
         return rankResult;
     }

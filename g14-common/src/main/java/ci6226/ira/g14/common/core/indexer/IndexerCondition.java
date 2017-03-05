@@ -12,7 +12,7 @@ import org.springframework.util.StringUtils;
  */
 public class IndexerCondition implements Condition {
 
-    public static final String willIndexKey = "indexer.willIndex";
+    private static final String willIndexKey = "lucene.willIndex";
 
     @Override
     public boolean matches(ConditionContext context, AnnotatedTypeMetadata metadata) {

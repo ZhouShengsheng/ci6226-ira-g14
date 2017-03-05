@@ -19,7 +19,9 @@ import org.springframework.util.StringUtils;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Post indexer.
@@ -28,7 +30,7 @@ import java.util.List;
  */
 @Component
 @Conditional(IndexerCondition.class)
-@ConfigurationProperties(prefix = "indexer")
+@ConfigurationProperties(prefix = "lucene")
 @Getter
 @Setter
 public class Indexer extends BaseIndexer {
@@ -47,8 +49,16 @@ public class Indexer extends BaseIndexer {
     // separated index writers for each year
     private List<IndexWriter> indexWriters;
 
+    // tags
+    @Getter @Setter private String rankLanguages;
+    private List<String> rankLanguageListWithBorder;
+
     @Override
     public void preProcess() {
+        // convert rankLanguages string into a list of tags
+        List<String> indexTagList = Arrays.stream(rankLanguages.replace(" ", "").toLowerCase().split(",")).collect(Collectors.toList());
+        rankLanguageListWithBorder = indexTagList.stream().map(tag -> String.format("<%s>", tag)).collect(Collectors.toList()); // eg: <java>
+
         // created index writers
         try {
             years = endYear - startYear + 1;
@@ -99,8 +109,18 @@ public class Indexer extends BaseIndexer {
 
     @Override
     public boolean willIndexPost(Post post) {
-        // index every post
-        return true;
+        String tags = post.getTags();
+        if (tags == null) {
+            return false;
+        }
+
+        for (String tagWithBorder: rankLanguageListWithBorder) {
+            if (tags.contains(tagWithBorder)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     @Override

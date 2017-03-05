@@ -23,7 +23,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
  *
  * @author Zhou Shengsheng
  */
-@ConfigurationProperties(prefix = "indexer")
+@ConfigurationProperties(prefix = "lucene")
 public abstract class BaseIndexer {
 
     private static final Logger logger = LoggerFactory.getLogger(BaseIndexer.class);

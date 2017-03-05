@@ -22,7 +22,7 @@ import org.springframework.util.StringUtils;
  */
 @Component
 @Conditional(IndexerCondition.class)
-@ConfigurationProperties(prefix = "indexer")
+@ConfigurationProperties(prefix = "lucene")
 @Getter
 @Setter
 public class Indexer extends BaseIndexer {

@@ -25,9 +25,9 @@ public class APIController {
 	private Searcher searcher;
 
 	@GetMapping(value = "/language_trend")
-	public Map<String, Object> getLanguageTrend() throws IOException {
+	public Map<String, Object> getLanguageTrend(String rankLanguages, int startYear, int endYear) throws IOException {
 		logger.info("getLanguageTrend");
-		return searcher.getLanguageRank();
+		return searcher.getLanguageRank(rankLanguages, startYear, endYear);
 	}
 	
 }

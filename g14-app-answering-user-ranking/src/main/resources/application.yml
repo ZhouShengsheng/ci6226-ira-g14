@@ -11,8 +11,8 @@ spring:
 
 # Search Engine
 
-# Indexer
-indexer:
+# Lucene
+lucene:
   dataFile: g14-app-answering-user-ranking/src/main/resources/Posts_10000.xml
   indexPath: target/app-answering-user-ranking/index
   willIndex: false

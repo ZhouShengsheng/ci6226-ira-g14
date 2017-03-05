@@ -24,7 +24,7 @@ import java.nio.file.Paths;
  *
  */
 @Configuration
-@ConfigurationProperties(prefix = "indexer")
+@ConfigurationProperties(prefix = "lucene")
 @Getter
 @Setter
 public class SearcherConfig {

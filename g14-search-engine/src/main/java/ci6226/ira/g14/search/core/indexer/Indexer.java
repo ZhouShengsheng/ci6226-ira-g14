@@ -26,7 +26,7 @@ import java.util.stream.Collectors;
  */
 @Component
 @Conditional(IndexerCondition.class)
-@ConfigurationProperties(prefix = "indexer")
+@ConfigurationProperties(prefix = "lucene")
 public class Indexer extends BaseIndexer {
 
     private static final Logger logger = LoggerFactory.getLogger(Indexer.class);
