@@ -9,8 +9,6 @@ spring:
     encoding.enable: true
     encoding.force: true
 
-# Search Engine
-
 # Lucene
 lucene:
   dataFile: /home/shengsheng/Workspaces/IR/resources/Posts.xml

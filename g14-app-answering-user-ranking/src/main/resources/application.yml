@@ -9,8 +9,6 @@ spring:
     encoding.enable: true
     encoding.force: true
 
-# Search Engine
-
 # Lucene
 lucene:
   dataFile: g14-app-answering-user-ranking/src/main/resources/Posts_10000.xml

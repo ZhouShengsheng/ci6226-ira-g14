@@ -1,9 +1,12 @@
 package ci6226.ira.g14.common.filter;
 
 import ci6226.ira.g14.common.core.indexer.BaseIndexer;
+import ci6226.ira.g14.common.core.indexer.IndexerCondition;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Conditional;
+import org.springframework.stereotype.Component;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletResponse;
@@ -12,19 +15,21 @@ import java.io.PrintWriter;
 
 /**
  * Filter to check if the search engine is indexing.
- * Web application may extend this class and annotated with @WebFilter(urlPatterns = "/*") to gain filtering capacity.
  *
  * @author Zhou Shengsheng
  */
-public class BaseProcessingFilter implements Filter {
+@Component
+@Conditional(IndexerCondition.class)
+public class ProcessingFilter implements Filter {
 
-	private final static Logger logger = LoggerFactory.getLogger(BaseProcessingFilter.class);
+	private final static Logger logger = LoggerFactory.getLogger(ProcessingFilter.class);
 
 	@Autowired
 	BaseIndexer indexer;
 
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
+        logger.info("init processing filter");
 	}
 
 	@Override
