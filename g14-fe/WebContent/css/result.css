@@ -1,0 +1,12 @@
+@CHARSET "UTF-8";
+body, html{
+	padding:30px;
+}
+.title{
+	color:#0000ff;
+	font-size:30px;
+}
+
+.result-container{
+	margin-bottom:30px;
+}
