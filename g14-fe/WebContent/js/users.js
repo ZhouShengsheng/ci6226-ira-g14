@@ -1,5 +1,5 @@
 $(function(){
-	var users_json=[
+	var users_json/*=[
 	                {
 	                    "userID": "22656",
 	                    "username": "Jon Skeet",
@@ -514,8 +514,37 @@ $(function(){
 	var title = "这是标题"; //统计图标标题
 	j.jqplot.diagram.base("chart2", data, line_title, "这是统计标题", x, x_label, y_label, data_max, 2);
 	*/
+	$("#btn").click(function(){
+		$("#users").empty();
+		var count = $("#numbers").val();
+		if(count==undefined)
+			count=50;
+		
+		$.ajax({
+	        type: "get",
+	        url: "http://155.69.150.182:9002/api/user_ranking",  /* 注意后面的名字对应CS的方法名称 */
+	        data: {"userCount": count},
+	        contentType: "application/json; charset=utf-8",
+	        dataType: "text",
+	        success: function (result) {
+	        	users_json = $.parseJSON(result);
+	          for(var i=0;i<users_json.length;i++){
+	        	  var username;
+	        	  if(users_json[i].username==undefined){
+	        		  username = "unanymous";
+	        	  }else{
+	        		  username = users_json[i].username;
+	        	  }
+	      		$("#users").append('<tr><td>'+users_json[i].userID+'</td><td>'+username+'</td><td>'+users_json[i].anwseredCount+'</td></tr>');
+	      		}
+	        },
+	         error: function(XMLHttpRequest, textStatus, errorThrown) {
+	        	 alert(XMLHttpRequest.status);
+	        	 alert(XMLHttpRequest.readyState);
+	        	 alert(textStatus);
+	         }
+	    });
+	});
 	
-	for(var i=0;i<users_json.length;i++){
-		$("#users").append('<tr><td>'+users_json[i].userID+'</td><td>'+users_json[i].username+'</td><td>'+users_json[i].anwseredCount+'</td></tr>');
-	}
-})
+	
+});

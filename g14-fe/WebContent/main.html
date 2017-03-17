@@ -6,26 +6,38 @@
 <link href="css/bootstrap.css" rel="stylesheet" type="text/css" media="all">
 <script type="text/javascript" src="js/bootstrap.js"></script>
 <script type="text/javascript" src="js/jQuery.js"></script>
-<link rel="stylesheet" type="text/css" href="css/style.css" />
+<link rel="stylesheet" type="text/css" href="css/style.css"/>
+<script>
+$(function(){
+	$("#search").click(function(){
+
+		sessionStorage.setItem("keywords", $("#keywords").val());
+		sessionStorage.setItem("field", $('input:radio:checked').val());
+		});
+});
+</script>
 </head>
-</head>
-<body>
-<header>
+<body style="padding:10px;">
+<div>
+<a href="users.html" class="btn btn-primary" >Users with highest answers</a>
+<a href="languages.html" class="btn btn-primary" style="margin-left: 20px;">Programming Languages Ranking</a>
+</div>
+<div>
 	<div class="logo">Search Engine</div>
-</header>
+</div>
 <div class="search">
-	<form action="http://155.69.149.197:8080/api/search?count=20" method="get">
+	<!-- form action="http://155.69.149.197:8080/api/search?count=20" method="get"-->
 	<div class="search-bar">
-		<input  type="search" name="keywords" placeholder="input your query here">
+		<input  type="search" id="keywords" name="keywords" placeholder="input your query here">
 		<input style="display:none;" type="text" name="count" value=20>
-		<input type="submit" value="search">
+		<a href="result.html" class="btn btn-primary" id="search">Search</a>
  	</div>
  	<div class="field">
  	    <span>Title <input type="radio" name="field" value="title" checked></span>
  	    <span>Body <input type="radio" name="field" value="body"></span>
  	    <span>Title&Body <input type="radio" name="field" value="all"></span>
  	</div>
-	</form>
+	<!-- /form-->
 </div>
 </body>
 </html>

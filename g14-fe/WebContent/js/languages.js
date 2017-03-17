@@ -1,5 +1,6 @@
 $(function(){
-	var languages_json = {
+	var languages_json 
+	/*= {
 			  "2008": [
 			           {
 			             "name": "java",
@@ -306,9 +307,9 @@ $(function(){
 			             "popularity": 59549
 			           }
 			         ]
-			       };
+			       };*/
 	
-	var data = [[1,2,3,4,5,6,7,8,9],[3,6,8,1,11,22,4,21,6],[3,3,4,15,161,22,40,21,60]];
+	//var data = [[1,2,3,4,5,6,7,8,9],[3,6,8,1,11,22,4,21,6],[3,3,4,15,161,22,40,21,60]];
 	var data_max = 200; //Y轴最大刻度
 	var line_title = ["java","c","c++","c#","swift","python","php","go"]; //曲线名称
 	var y_label = "amount"; //Y轴标题
@@ -347,74 +348,65 @@ $(function(){
 		var go = new Array();
 		var start = $("#start").val();
 		var end = $("#end").val();
-		for(var i=start;i<=end;i++){
-			years.push(i);//x axes is years
-			
-			java.push((languages_json[i])[0].popularity);
-			if((languages_json[i])[0].popularity>max)
-				max=(languages_json[i])[0].popularity;
-			
-			c.push((languages_json[i])[1].popularity);
-			if((languages_json[i])[1].popularity>max)
-				max=(languages_json[i])[1].popularity;
-			
-			cplus.push((languages_json[i])[2].popularity);
-			if((languages_json[i])[2].popularity>max)
-				max=(languages_json[i])[2].popularity;
-			
-			csharp.push((languages_json[i])[3].popularity);
-			if((languages_json[i])[03].popularity>max)
-				max=(languages_json[i])[3].popularity;
-			
-			swift.push((languages_json[i])[4].popularity);
-			if((languages_json[i])[04].popularity>max)
-				max=(languages_json[i])[4].popularity;
-			
-			python.push((languages_json[i])[5].popularity);
-			if((languages_json[i])[5].popularity>max)
-				max=(languages_json[i])[5].popularity;
-			
-			php.push((languages_json[i])[6].popularity);
-			if((languages_json[i])[06].popularity>max)
-				max=(languages_json[i])[6].popularity;
-			
-			go.push((languages_json[i])[7].popularity);
-			if((languages_json[i])[7].popularity>max)
-				max=(languages_json[i])[7].popularity;
-		}
-		x=years;
-		data_max = max;
-		data = [java, c, cplus, csharp, swift, python, php, go];
-		$("#chart1").empty();
-		j.jqplot.diagram.base("chart1", data, line_title, "Programming Langauges Ranking", x, x_label, y_label, data_max+Math.ceil(data_max/10), 1);
-		/*
-		$.jqplot('chart1', 
-				data, 
-				{
-					title:'Programming Languages',  
-					axisDefaults: {  
-					},  
-		            axes : {                     
-		            	xaxis : {  
-		            		min:start,
-		            		max:end,
-		                    label: "years",
-		                    ticks: years
-		            	},  
-		                yaxis : {  
-		                	min: 0,   
-		                    max: data_max,  
-		                    pad:1.2,
-		                	label:'Numbers',  
-		                } 
-		            }  
-				});*/
 		
-		
+		$.ajax({
+	        type: "get",
+	        url: "http://155.69.150.182:9001/api/language_trend?rankLanguages=java%2Cc%2Cc%2B%2B%2Cc%23%2Cgo%2Cswift%2Cpython%2Cphp&startYear=2008&endYear=2016",  /* 注意后面的名字对应CS的方法名称 */
+	        contentType: "application/json; charset=utf-8",
+	        dataType: "text",
+	        success: function (result) {
+	          languages_json = $.parseJSON(result);
+	          
+	          for(var i=start;i<=end;i++){
+	  			years.push(i);//x axes is years
+	  			
+	  			java.push((languages_json[i])[0].popularity);
+	  			if((languages_json[i])[0].popularity>max)
+	  				max=(languages_json[i])[0].popularity;
+	  			
+	  			c.push((languages_json[i])[1].popularity);
+	  			if((languages_json[i])[1].popularity>max)
+	  				max=(languages_json[i])[1].popularity;
+	  			
+	  			cplus.push((languages_json[i])[2].popularity);
+	  			if((languages_json[i])[2].popularity>max)
+	  				max=(languages_json[i])[2].popularity;
+	  			
+	  			csharp.push((languages_json[i])[3].popularity);
+	  			if((languages_json[i])[03].popularity>max)
+	  				max=(languages_json[i])[3].popularity;
+	  			
+	  			swift.push((languages_json[i])[4].popularity);
+	  			if((languages_json[i])[04].popularity>max)
+	  				max=(languages_json[i])[4].popularity;
+	  			
+	  			python.push((languages_json[i])[5].popularity);
+	  			if((languages_json[i])[5].popularity>max)
+	  				max=(languages_json[i])[5].popularity;
+	  			
+	  			php.push((languages_json[i])[6].popularity);
+	  			if((languages_json[i])[06].popularity>max)
+	  				max=(languages_json[i])[6].popularity;
+	  			
+	  			go.push((languages_json[i])[7].popularity);
+	  			if((languages_json[i])[7].popularity>max)
+	  				max=(languages_json[i])[7].popularity;
+	  		}
+	  		x=years;
+	  		data_max = max;
+	  		data = [java, c, cplus, csharp, swift, python, php, go];
+	  		$("#chart1").empty();
+	  		j.jqplot.diagram.base("chart1", data, line_title, "Programming Langauges Ranking", x, x_label, y_label, data_max+Math.ceil(data_max/10), 1);
+	  		
+	          
+	          
+	        },
+	         error: function(XMLHttpRequest, textStatus, errorThrown) {
+	        	 alert(XMLHttpRequest.status);
+	        	 alert(XMLHttpRequest.readyState);
+	        	 alert(textStatus);
+	         }
+	    });
 		
 	});
-	
-	function ranking_languages(start, end){
-		
-	}
 });
