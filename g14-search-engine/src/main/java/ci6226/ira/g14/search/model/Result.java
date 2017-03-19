@@ -4,6 +4,7 @@ public class Result {
 
 	private String title;
 	private String body;
+	private int docId;
 	private float score;
 
 	public String getTitle() {
@@ -14,7 +15,15 @@ public class Result {
 		this.title = title;
 	}
 
-	public String getBody() {
+    public int getDocId() {
+        return docId;
+    }
+
+    public void setDocId(int docId) {
+        this.docId = docId;
+    }
+
+    public String getBody() {
 		return body;
 	}
 

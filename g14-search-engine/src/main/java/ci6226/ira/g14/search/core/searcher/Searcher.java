@@ -31,7 +31,9 @@ public class Searcher extends BaseSearcher<Result> {
         Result result = new Result();
         result.setTitle(document.get(Indexer.INDEX_FILED_TITLE));
         result.setBody(document.get(Indexer.INDEX_FILED_BODY));
+        result.setDocId(scoreDoc.doc);
         result.setScore(scoreDoc.score);
         return result;
     }
+
 }
