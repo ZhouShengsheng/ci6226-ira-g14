@@ -16,4 +16,5 @@ lucene:
   willIndex: false
   rankLanguages: java, c, c++, c#, python, php, javascript, swift, objective-c, ruby, perl, go
   startYear: 2008
-  endYear: 2017
+  endYear: 2016
+  trendFile: target/app-language-trend/index/trend.data

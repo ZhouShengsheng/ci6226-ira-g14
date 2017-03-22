@@ -1,6 +1,6 @@
 package ci6226.ira.g14.search.controller;
 
-import ci6226.ira.g14.search.core.searcher.Searcher;
+import ci6226.ira.g14.search.core.searcher.PostSearcher;
 import ci6226.ira.g14.search.model.Result;
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.slf4j.Logger;
@@ -27,24 +27,24 @@ public class APIController {
 	private static final Logger logger = LoggerFactory.getLogger(APIController.class);
 	
 	@Autowired
-	private Searcher searcher;
+	private PostSearcher postSearcher;
 
 	@GetMapping(value = "/search")
 	public List<Result> search(@RequestParam String field, @RequestParam String keywords, @RequestParam int count) throws IOException, ParseException {
 		logger.info("search: {}, {}, {}", field, keywords, count);
 		
 		// title
-		if (Searcher.SEARCH_FIELD_TITLE.equals(field)) {
-			return searcher.search(keywords, count, Searcher.SEARCH_FIELD_TITLE);
+		if (PostSearcher.SEARCH_FIELD_TITLE.equals(field)) {
+			return postSearcher.search(keywords, count, PostSearcher.SEARCH_FIELD_TITLE);
 		}
 		
 		// body
-		if(Searcher.SEARCH_FIELD_BODY.equals(field)) {
-			return searcher.search(keywords, count, Searcher.SEARCH_FIELD_BODY);
+		if(PostSearcher.SEARCH_FIELD_BODY.equals(field)) {
+			return postSearcher.search(keywords, count, PostSearcher.SEARCH_FIELD_BODY);
 		}
 
 		// all
-		return searcher.search(keywords, count, Searcher.SEARCH_FIELD_TITLE, Searcher.SEARCH_FIELD_BODY);
+		return postSearcher.search(keywords, count, PostSearcher.SEARCH_FIELD_TITLE, PostSearcher.SEARCH_FIELD_BODY);
 	}
 	
 }

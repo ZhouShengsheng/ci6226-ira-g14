@@ -27,9 +27,9 @@ import java.util.stream.Collectors;
 @Component
 @Conditional(IndexerCondition.class)
 @ConfigurationProperties(prefix = "lucene")
-public class Indexer extends BaseIndexer {
+public class PostIndexer extends BaseIndexer {
 
-    private static final Logger logger = LoggerFactory.getLogger(Indexer.class);
+    private static final Logger logger = LoggerFactory.getLogger(PostIndexer.class);
 
     // index fileds
     public static final String INDEX_FILED_TITLE = "title";
@@ -89,10 +89,10 @@ public class Indexer extends BaseIndexer {
     public Document getDocumentFromPost(Post post) {
         Document document = new Document();
         if (!StringUtils.isEmpty(post.getTitle())) {
-            document.add(new TextField(Indexer.INDEX_FILED_TITLE, post.getTitle(), Field.Store.YES));
+            document.add(new TextField(PostIndexer.INDEX_FILED_TITLE, post.getTitle(), Field.Store.YES));
         }
         if (!StringUtils.isEmpty(post.getBody())) {
-            document.add(new TextField(Indexer.INDEX_FILED_BODY, post.getBody(), Field.Store.YES));
+            document.add(new TextField(PostIndexer.INDEX_FILED_BODY, post.getBody(), Field.Store.YES));
         }
         return document;
     }

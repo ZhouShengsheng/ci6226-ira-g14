@@ -33,9 +33,9 @@ import java.util.stream.Collectors;
 @ConfigurationProperties(prefix = "lucene")
 @Getter
 @Setter
-public class Indexer extends BaseIndexer {
+public class LanguageIndexer extends BaseIndexer {
 
-    private static final Logger logger = LoggerFactory.getLogger(Indexer.class);
+    private static final Logger logger = LoggerFactory.getLogger(LanguageIndexer.class);
 
     // index fileds
     public static final String INDEX_FILED_TITLE = "title";
@@ -127,10 +127,10 @@ public class Indexer extends BaseIndexer {
     public Document getDocumentFromPost(Post post) {
         Document document = new Document();
         if (!StringUtils.isEmpty(post.getTitle())) {
-            document.add(new TextField(Indexer.INDEX_FILED_TITLE, post.getTitle(), Field.Store.YES));
+            document.add(new TextField(LanguageIndexer.INDEX_FILED_TITLE, post.getTitle(), Field.Store.YES));
         }
         if (!StringUtils.isEmpty(post.getBody())) {
-            document.add(new TextField(Indexer.INDEX_FILED_BODY, post.getBody(), Field.Store.YES));
+            document.add(new TextField(LanguageIndexer.INDEX_FILED_BODY, post.getBody(), Field.Store.YES));
         }
         return document;
     }

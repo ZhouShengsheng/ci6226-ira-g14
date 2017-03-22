@@ -1,6 +1,6 @@
 package ci6226.ira.g14.app.answering.user.ranking.core.indexer;
 
-import ci6226.ira.g14.app.answering.user.ranking.core.searcher.Searcher;
+import ci6226.ira.g14.app.answering.user.ranking.core.searcher.UserSearcher;
 import ci6226.ira.g14.common.core.indexer.BaseIndexer;
 import ci6226.ira.g14.common.core.indexer.IndexerCondition;
 import ci6226.ira.g14.common.model.Post;
@@ -28,9 +28,9 @@ import org.springframework.util.StringUtils;
 @ConfigurationProperties(prefix = "lucene")
 @Getter
 @Setter
-public class Indexer extends BaseIndexer {
+public class UserIndexer extends BaseIndexer {
 
-    private static final Logger logger = LoggerFactory.getLogger(Indexer.class);
+    private static final Logger logger = LoggerFactory.getLogger(UserIndexer.class);
 
     // index fileds
     public static final String INDEX_FILED_USER_ID = "userId";
@@ -46,7 +46,7 @@ public class Indexer extends BaseIndexer {
     @Override
     public void preDestroy() {
         // trigger Searcher lifecycle to prepare ranking list
-        applicationContext.getBean(Searcher.class);
+        applicationContext.getBean(UserSearcher.class);
     }
 
     @Override
@@ -62,10 +62,10 @@ public class Indexer extends BaseIndexer {
     public Document getDocumentFromPost(Post post) {
         Document document = new Document();
         if (!StringUtils.isEmpty(post.getOwnerUserId())) {
-            document.add(new TextField(Indexer.INDEX_FILED_USER_ID, post.getOwnerUserId(), Field.Store.YES));
+            document.add(new TextField(UserIndexer.INDEX_FILED_USER_ID, post.getOwnerUserId(), Field.Store.YES));
         }
         if (!StringUtils.isEmpty(post.getOwnerDisplayName())) {
-            document.add(new TextField(Indexer.INDEX_FILED_USER_NAME, post.getOwnerDisplayName(), Field.Store.YES));
+            document.add(new TextField(UserIndexer.INDEX_FILED_USER_NAME, post.getOwnerDisplayName(), Field.Store.YES));
         }
         return document;
     }

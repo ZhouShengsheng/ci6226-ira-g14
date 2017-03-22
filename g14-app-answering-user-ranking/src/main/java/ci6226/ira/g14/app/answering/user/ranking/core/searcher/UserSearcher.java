@@ -1,7 +1,7 @@
 package ci6226.ira.g14.app.answering.user.ranking.core.searcher;
 
 
-import ci6226.ira.g14.app.answering.user.ranking.core.indexer.Indexer;
+import ci6226.ira.g14.app.answering.user.ranking.core.indexer.UserIndexer;
 import ci6226.ira.g14.app.answering.user.ranking.model.UserRank;
 import ci6226.ira.g14.common.core.searcher.BaseSearcher;
 import lombok.Getter;
@@ -36,9 +36,9 @@ import java.util.List;
 @Lazy
 @Getter
 @Setter
-public class Searcher extends BaseSearcher<UserRank> {
+public class UserSearcher extends BaseSearcher<UserRank> {
 
-    private static final Logger logger = LoggerFactory.getLogger(Searcher.class);
+    private static final Logger logger = LoggerFactory.getLogger(UserSearcher.class);
 
     // max user count allowed in the ranking list
     private int maxUserCount;
@@ -61,8 +61,8 @@ public class Searcher extends BaseSearcher<UserRank> {
                 rankingList = (List<UserRank>)ois.readObject();
                 ois.close();
             } else {
-                // get ranking list and save to local file
-                logger.info("saving ranking list from file");
+                // get ranking list and save it to local file
+                logger.info("saving ranking list to file");
                 getAnsweringUserRank(maxUserCount);
                 file.getParentFile().mkdirs();
                 ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(file));
@@ -102,7 +102,7 @@ public class Searcher extends BaseSearcher<UserRank> {
 
             // get all terms of a filed
             Fields fields = MultiFields.getFields(indexReader);
-            TermsEnum termsEnum = fields.terms(Indexer.INDEX_FILED_USER_ID).iterator();
+            TermsEnum termsEnum = fields.terms(UserIndexer.INDEX_FILED_USER_ID).iterator();
             BytesRef bytesRef;
             int count = 0;
 
@@ -117,7 +117,7 @@ public class Searcher extends BaseSearcher<UserRank> {
                 String userID = bytesRef.utf8ToString();
                 UserRank userRank = new UserRank();
                 userRank.setUserID(userID);
-                userRank.setAnwseredCount(getTermFreq(Indexer.INDEX_FILED_USER_ID, userID));
+                userRank.setAnwseredCount(getTermFreq(UserIndexer.INDEX_FILED_USER_ID, userID));
                 rankingList.add(userRank);
                 count++;
                 // sort
@@ -136,7 +136,7 @@ public class Searcher extends BaseSearcher<UserRank> {
             // search for username
             rankingList.forEach(userRank -> {
                 try {
-                    List<UserRank> searchResults = search(userRank.getUserID(), 20000, Indexer.INDEX_FILED_USER_ID);
+                    List<UserRank> searchResults = search(userRank.getUserID(), 20000, UserIndexer.INDEX_FILED_USER_ID);
                     for(UserRank r: searchResults) {
                         String username = r.getUsername();
                         if (!StringUtils.isEmpty(username)) {
@@ -160,8 +160,8 @@ public class Searcher extends BaseSearcher<UserRank> {
     @Override
     public UserRank getResultFromDocument(Document document, ScoreDoc scoreDoc) {
         UserRank userRank = new UserRank();
-        userRank.setUserID(document.get(Indexer.INDEX_FILED_USER_ID));
-        userRank.setUsername(document.get(Indexer.INDEX_FILED_USER_NAME));
+        userRank.setUserID(document.get(UserIndexer.INDEX_FILED_USER_ID));
+        userRank.setUsername(document.get(UserIndexer.INDEX_FILED_USER_NAME));
         return userRank;
     }
 

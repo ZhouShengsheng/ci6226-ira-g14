@@ -1,7 +1,7 @@
 package ci6226.ira.g14.search.core.searcher;
 
 import ci6226.ira.g14.common.core.searcher.BaseSearcher;
-import ci6226.ira.g14.search.core.indexer.Indexer;
+import ci6226.ira.g14.search.core.indexer.PostIndexer;
 import ci6226.ira.g14.search.model.Result;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.search.ScoreDoc;
@@ -16,7 +16,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 @Lazy
-public class Searcher extends BaseSearcher<Result> {
+public class PostSearcher extends BaseSearcher<Result> {
 
     @Override
     public void preProcess() {
@@ -29,8 +29,8 @@ public class Searcher extends BaseSearcher<Result> {
     @Override
     public Result getResultFromDocument(Document document, ScoreDoc scoreDoc) {
         Result result = new Result();
-        result.setTitle(document.get(Indexer.INDEX_FILED_TITLE));
-        result.setBody(document.get(Indexer.INDEX_FILED_BODY));
+        result.setTitle(document.get(PostIndexer.INDEX_FILED_TITLE));
+        result.setBody(document.get(PostIndexer.INDEX_FILED_BODY));
         result.setDocId(scoreDoc.doc);
         result.setScore(scoreDoc.score);
         return result;
