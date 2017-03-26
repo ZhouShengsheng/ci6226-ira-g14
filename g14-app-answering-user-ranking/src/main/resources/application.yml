@@ -11,7 +11,7 @@ spring:
 
 # Lucene
 lucene:
-  dataFile: g14-app-answering-user-ranking/src/main/resources/Posts_10000.xml
+  dataFile: g14-app-answering-user-ranking/src/main/resources/Posts.xml
   indexPath: target/app-answering-user-ranking/index
   rankingFile: target/app-answering-user-ranking/index/ranking.data
   willIndex: false

@@ -11,7 +11,7 @@ spring:
 
 # Lucene
 lucene:
-  dataFile: g14-app-language-trend/src/main/resources/Posts_10000.xml
+  dataFile: g14-app-language-trend/src/main/resources/Posts.xml
   indexPath: target/app-language-trend/index
   willIndex: false
   rankLanguages: java, c, c++, c#, python, php, javascript, swift, objective-c, ruby, perl, go
