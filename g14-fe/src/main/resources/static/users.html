@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link href="webjars/bootstrap/3.3.6/css/bootstrap.css" rel="stylesheet" type="text/css" media="all">
+<script type="text/javascript" src="webjars/bootstrap/3.3.6/js/bootstrap.js"></script>
+<script type="text/javascript" src="webjars/jquery/2.2.4/jquery.js"></script>
+<script type="text/javascript" src="js/users.js"></script>
+</head>
+
+<body>
+<!--div id="chart2"></div-->
+<div>
+Numbers: <input type="text" name="number" id="numbers" />
+<button type="button" id="btn">Search</button>
+</div>
+
+<div>
+<table class="table table-striped">
+	<caption>Users with highest number of answering</caption>
+	<thead>
+		<tr>
+			<th>USER ID</th>
+			<th>USER NAME</th>
+			<th>NUMBER OF ANSWERS</th>
+		</tr>
+	</thead>
+	<tbody id="users">
+	</tbody>
+</table>
+</div>
+</body>
+</html>
