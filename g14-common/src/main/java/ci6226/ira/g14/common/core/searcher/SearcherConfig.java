@@ -32,7 +32,6 @@ public class SearcherConfig {
 	private String indexPath;
 
 	public static IndexReader newIndexReader(String indexPath) throws IOException {
-//        return DirectoryReader.open(new RAMDirectory(FSDirectory.open(Paths.get(indexPath)), IOContext.DEFAULT));
         return DirectoryReader.open(MMapDirectory.open(Paths.get(indexPath)));
     }
 

@@ -46,5 +46,5 @@ public class APIController {
 		// all
 		return postSearcher.search(keywords, count, PostSearcher.SEARCH_FIELD_TITLE, PostSearcher.SEARCH_FIELD_BODY);
 	}
-	
+
 }

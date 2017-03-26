@@ -20,7 +20,7 @@
         <java.version>1.8</java.version>
         <spring-boot.version>1.5.1.RELEASE</spring-boot.version>
 
-        <!-- version Control -->
+        <!-- version control -->
         <g14-common.version>1.0.0-SNAPSHOT</g14-common.version>
         <g14-search-engine.version>1.0.0-SNAPSHOT</g14-search-engine.version>
         <g14-app-language-trend.version>1.0.0-SNAPSHOT</g14-app-language-trend.version>

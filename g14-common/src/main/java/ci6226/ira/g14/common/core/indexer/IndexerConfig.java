@@ -86,9 +86,7 @@ public class IndexerConfig {
 	@Bean
 	@Scope(BeanDefinition.SCOPE_PROTOTYPE)
 	public BufferedReader dataReader() throws FileNotFoundException {
-        FileReader reader = new FileReader(dataFile);
-        BufferedReader br = new BufferedReader(reader);
-        return br;
+        return new BufferedReader(new FileReader(dataFile));
 	}
 	
 }

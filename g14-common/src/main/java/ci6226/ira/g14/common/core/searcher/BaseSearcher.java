@@ -1,5 +1,6 @@
 package ci6226.ira.g14.common.core.searcher;
 
+import org.apache.lucene.analysis.core.WhitespaceAnalyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.IndexReader;
@@ -72,7 +73,7 @@ public abstract class BaseSearcher<T> {
 	 * @throws ParseException 
 	 */
 	public List<T> search(String keywords, int topNum, String... fields) throws IOException, ParseException {
-		StandardAnalyzer analyzer = new StandardAnalyzer();
+		WhitespaceAnalyzer analyzer = new WhitespaceAnalyzer();
 		MultiFieldQueryParser parser = new MultiFieldQueryParser(fields, analyzer);
 		Query query = parser.parse(escapeSpecialCharacters(keywords));
 		TopScoreDocCollector collector = TopScoreDocCollector.create(topNum);
