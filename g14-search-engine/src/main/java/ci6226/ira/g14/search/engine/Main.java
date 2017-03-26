@@ -1,4 +1,4 @@
-package ci6226.ira.g14.search;
+package ci6226.ira.g14.search.engine;
 
 
 import org.springframework.boot.SpringApplication;

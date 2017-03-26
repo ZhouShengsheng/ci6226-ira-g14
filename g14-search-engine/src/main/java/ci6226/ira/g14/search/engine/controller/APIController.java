@@ -1,7 +1,5 @@
-package ci6226.ira.g14.search.controller;
+package ci6226.ira.g14.search.engine.controller;
 
-import ci6226.ira.g14.search.core.searcher.PostSearcher;
-import ci6226.ira.g14.search.model.Result;
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +10,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import ci6226.ira.g14.search.engine.core.searcher.PostSearcher;
+import ci6226.ira.g14.search.engine.model.Result;
 
 import java.io.IOException;
 import java.util.List;

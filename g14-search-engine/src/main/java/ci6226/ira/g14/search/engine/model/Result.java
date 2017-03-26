@@ -1,4 +1,4 @@
-package ci6226.ira.g14.search.model;
+package ci6226.ira.g14.search.engine.model;
 
 public class Result {
 

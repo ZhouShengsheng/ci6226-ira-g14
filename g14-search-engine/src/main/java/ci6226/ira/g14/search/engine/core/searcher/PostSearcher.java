@@ -1,8 +1,9 @@
-package ci6226.ira.g14.search.core.searcher;
+package ci6226.ira.g14.search.engine.core.searcher;
 
 import ci6226.ira.g14.common.core.searcher.BaseSearcher;
-import ci6226.ira.g14.search.core.indexer.PostIndexer;
-import ci6226.ira.g14.search.model.Result;
+import ci6226.ira.g14.search.engine.core.indexer.PostIndexer;
+import ci6226.ira.g14.search.engine.model.Result;
+
 import org.apache.lucene.document.Document;
 import org.apache.lucene.search.ScoreDoc;
 import org.springframework.context.annotation.Lazy;
