@@ -8,6 +8,3 @@ spring:
     encoding.charset: UTF-8
     encoding.enable: true
     encoding.force: true
-
-#  mvc:
-#    static-path-pattern: /static/**

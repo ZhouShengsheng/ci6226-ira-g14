@@ -8,9 +8,9 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
 /**
- * Main class of the language trend application.
+ * Main class of the frontend.
  * 
- * @author Zhou Shengsheng
+ * @author Jinjin
  */
 @ServletComponentScan
 @Configuration
