@@ -24,15 +24,15 @@ Stack Overflow is a Q&A website which allows programmers to search, ask, answer 
 
 ### 2.1 Installation with Eclipse
 
-(1) Import
+#### (1) Import
 
 Open Eclipse, choose **[import -> Maven -> Existing Maven Projects]**. Select the Root Directory as ci6226-ira-g14 and select all projects in the window. Click finish to finish the import.
 
-(2) Change configuration
+#### (2) Change configuration
 
 You can change the application configuration in the **src/main/resources/application.yml** file. For instance, you can change port, Posts.xml path and index path. Please refer to specific .yml file for more details of the configuration parameters.
 
-(3) Run
+#### (3) Run
 
 Every project has the same manner to run. Let's take search engine for example:
 Right click the Main.java in package ci6226.ira.g14.search.engine and select **[Run As -> Spring Boot App]**. Then the search engine will run and listen on 9001 port. The following list lists all of the Main classes and default listened ports of the projects:
@@ -44,29 +44,29 @@ Right click the Main.java in package ci6226.ira.g14.search.engine and select **[
 
 ### 2.2 Installation with IntelliJ
 
-(1) Import
+#### (1) Import
 
 Open IntelliJ, in the welcome page, select **[Create Project -> Empty Project -> Next -> Navigate location to ci6226-ira-g14 -> Finish]**. Then, in the project structure window, add all projects as module by select [ '+' Symbol -> Import Module -> Choose g14-search-engine (or others) -> Open -> Import module from external module -> Maven -> Next ... -> Finish].
 
-(2) Change configuration
+#### (2) Change configuration
 
 Same as described in the section 2.1.(2).
 
-(3) Run
+#### (3) Run
 
 Right click the Main.java and select Run 'Main'. For detailed Main.java packages and ports, please refer to section 2.1.(3).
 
 ### 2.3 Installation with Terminal
 
-(1) Install Maven
+#### (1) Install Maven
 
 If you don't have maven installed in your system, please refer to the Maven installation guide to get the Maven installed. The installation guide is at https://maven.apache.org/guides/getting-started/maven-in-five-minutes.html.
 
-(2) Change configuration
+#### (2) Change configuration
 
 Same as described in the section 2.1.(2).
 
-(3) Run
+#### (3) Run
 
 Let's take search engine for example:\
 Enter the root directory of the search engine project:\
@@ -79,13 +79,13 @@ And the search engine application will run and listen on 9001 port. Other applic
 
 ### 3.1 Frontend
 
-(1) Search Engine Page
+#### (1) Search Engine Page
 You can use web browser to visit **http://localhost:8000** to access the main web page of the frontend. The search input box is right in the center of the web page. You can input search keywords and select which field you want to search. Then click the search button and the search results will be rendered. If you want to another search, you can simply input keywords in the top left input box instead going back the main page.
 
-(2) Language Trend Page
+#### (2) Language Trend Page
 The url is **http://localhost:8000/languages**. Select start year and end year and click the search button. The language trend results will be rendered in a graph.
 
-(3) Answering User Ranking Page
+#### (3) Answering User Ranking Page
 The url is **http://localhost:8000/users**. Input a top number users in the top left box and click search button. The results will be rendered in the below list.
 
 ### 3.2 Search Engine
@@ -217,13 +217,13 @@ userCount: top N users
 
 We provided shell scripts to easily deploy the applications to remote server. Note that these scripts can only be used in a UNIX-like system like UNIX, Linux, Mac OS and so on. They cannot be used in Windows.
 
-(1) Server Configuration
+#### (1) Server Configuration
 
 In order to use the script for deployment, you need to configure your remote server to allow login via ssh key. If your server is not configured in such manner, please refer to this tutorial for guide on how to configure: https://www.digitalocean.com/community/tutorials/how-to-configure-ssh-key-based-authentication-on-a-linux-server.
 
 And you also need to configure the firewall to allow TCP port used in the applications.
 
-(2) Scripts Modification
+#### (2) Scripts Modification
 
 The scripts are in the root directory of every project. For example, in the search engine project, the scripts are:
 - g14-search-engine/deploy.sh
@@ -240,7 +240,7 @@ And modify the server.sh to configure the java environment:
 export JAVA_HOME=/path/to/jdk
 ```
 
-(3) One Key Deployment
+#### (3) One Key Deployment
 
 Finally, you can run the deploy.sh to automatically build and deploy the project to the remote server:
 ```bash
