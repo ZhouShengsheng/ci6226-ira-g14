@@ -248,16 +248,16 @@ And you also need to configure the firewall to allow TCP port used in the applic
 #### (2) Scripts Modification
 
 The scripts are in the root directory of every project. For example, in the search engine project, the scripts are:
-- g14-search-engine/deploy.sh
-- g14-search-engine/server.sh
+- **g14-search-engine/deploy.sh**
+- **g14-search-engine/server.sh**
 
-Next step is to modify the deploy.sh to set the user and server to yours:
+Next step is to modify the **deploy.sh** to set the user and server to yours:
 ```bash
 REMOTE_SERVER=your_server_address
 REMOTE_USER=your_server_user
 ```
 
-And modify the server.sh to configure the java environment:
+And modify the **server.sh** to configure the java environment:
 ```bash
 export JAVA_HOME=/path/to/jdk
 ```
