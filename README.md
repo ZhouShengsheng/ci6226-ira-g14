@@ -5,24 +5,24 @@ Group: 14\
 Members: Ke Xiangyu, Li Jinjin, Li Xihan, Zhou Shengsheng\
 Project Home: https://github.com/ZhouShengsheng/ci6226-ira-g14.git
 
-### Abstract
+## Abstract
 
 Information retrieval plays a huge role in our every day life. We would always like to search for information that we care about or want to know using search engines like Google, Baidu, Bing and so on. And there are always new friends, movies or products that applications we use like Twitter, Youtube or eBay recommends to us. These services are all based on information retrieval. In a certain point, human beings are hard to live without information retrieval in an information era.
 Stack Overflow is a Q&A website which allows programmers to search, ask, answer and make comments on questions. And our project aims to provide a search engine system to let user quickly search for their questions based on part of the Stack Overflow data. We also built another two applications to analysis the data. One application is to retrieve the popularity of each programming language from 2008 to 2016. The other application is to rank users based on their answer counts.
 
-### 1. Introduction
+## 1. Introduction
 
-#### 1.1 System Architecture
+### 1.1 System Architecture
 
 ![System Architecture](https://github.com/ZhouShengsheng/ci6226-ira-g14/blob/master/images/image1_architecture.png 'System Architecture')
 
-#### 1.2 Project Structure
+### 1.2 Project Structure
 
 ![Project Structure](https://github.com/ZhouShengsheng/ci6226-ira-g14/blob/master/images/image2_project_structure.png 'Project Structure')
 
-### 2. Installation
+## 2. Installation
 
-#### 2.1 Installation with Eclipse
+### 2.1 Installation with Eclipse
 
 (1) Import
 
@@ -42,7 +42,7 @@ Right click the Main.java in package ci6226.ira.g14.search.engine and select **[
 - Answering User Ranking: ci6226.ira.g14.app.answering.user.ranking.Main.java, 9003
 - Frontend: ci6226.ira.g14.fe.Main.java, 8000
 
-#### 2.2 Installation with IntelliJ
+### 2.2 Installation with IntelliJ
 
 (1) Import
 
@@ -56,7 +56,7 @@ Same as described in the section 2.1.(2).
 
 Right click the Main.java and select Run 'Main'. For detailed Main.java packages and ports, please refer to section 2.1.(3).
 
-#### 2.3 Installation with Terminal
+### 2.3 Installation with Terminal
 
 (1) Install Maven
 
@@ -75,9 +75,9 @@ Run the application:\
 `$ mvn spring-boot:run`\
 And the search engine application will run and listen on 9001 port. Other applications share the same procedure to run in a terminal.
 
-### 3. Usage
+## 3. Usage
 
-#### 3.1 Frontend
+### 3.1 Frontend
 
 (1) Search Engine Page
 You can use web browser to visit **http://localhost:8000** to access the main web page of the frontend. The search input box is right in the center of the web page. You can input search keywords and select which field you want to search. Then click the search button and the search results will be rendered. If you want to another search, you can simply input keywords in the top left input box instead going back the main page.
@@ -88,7 +88,7 @@ The url is **http://localhost:8000/languages**. Select start year and end year a
 (3) Answering User Ranking Page
 The url is **http://localhost:8000/users**. Input a top number users in the top left box and click search button. The results will be rendered in the below list.
 
-#### 3.2 Search Engine
+### 3.2 Search Engine
 
 If you want to interact with the search engine without the web page, you can. The search engine exposes an API from which the web page fetches data actually.
 
@@ -123,7 +123,7 @@ count: top N results
 ```
 
 
-#### 3.3 Language Trend
+### 3.3 Language Trend
 
 - Request
 ```
@@ -180,7 +180,7 @@ endYear: end year
 ```
 
 
-#### 3.4 Answering User Ranking
+### 3.4 Answering User Ranking
 
 - Request
 ```
@@ -213,7 +213,7 @@ userCount: top N users
 ]
 ```
 
-### 4. Deployment
+## 4. Deployment
 
 We provided shell scripts to easily deploy the applications to remote server. Note that these scripts can only be used in a UNIX-like system like UNIX, Linux, Mac OS and so on. They cannot be used in Windows.
 
