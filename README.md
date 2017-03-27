@@ -18,7 +18,7 @@ Stack Overflow is a Q&A website which allows programmers to search, ask, answer 
 
 #### 1.2 Project Structure
 
-![Project Structure](https://github.com/ZhouShengsheng/ci6226-ira-g14/blob/master/images/image2_architecture.png 'Project Structure')
+![Project Structure](https://github.com/ZhouShengsheng/ci6226-ira-g14/blob/master/images/image2_project_structure.png 'Project Structure')
 
 ### 2. Installation
 
