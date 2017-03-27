@@ -14,29 +14,29 @@ Stack Overflow is a Q&A website which allows programmers to search, ask, answer 
 
 ### 1.1 System Architecture
 
-<img src="https://github.com/ZhouShengsheng/ci6226-ira-g14/blob/master/images/image1_architecture.png" alt="System Architecture" width="500">
+<img src="https://github.com/ZhouShengsheng/ci6226-ira-g14/blob/master/images/image1_architecture.png" alt="System Architecture" width="800">
 
 ### 1.2 Project Structure
 
-<img src="https://github.com/ZhouShengsheng/ci6226-ira-g14/blob/master/images/image2_project_structure.png" alt="Project Structure" width="300">
+<img src="https://github.com/ZhouShengsheng/ci6226-ira-g14/blob/master/images/image2_project_structure.png" alt="Project Structure" width="360">
 
 ### 1.3 Fontend Web Pages
 
 - Home Page
 
-<img src="https://github.com/ZhouShengsheng/ci6226-ira-g14/blob/master/images/image3_home_page.png" alt="Home Page" width="300">
+<img src="https://github.com/ZhouShengsheng/ci6226-ira-g14/blob/master/images/image3_home_page.png" alt="Home Page" width="600">
 
 - Search Engine
 
-<img src="https://github.com/ZhouShengsheng/ci6226-ira-g14/blob/master/images/image4_search_engine.png" alt="Search Engine" width="300">
+<img src="https://github.com/ZhouShengsheng/ci6226-ira-g14/blob/master/images/image4_search_engine.png" alt="Search Engine" width="600">
 
 - Language Trend
 
-<img src="https://github.com/ZhouShengsheng/ci6226-ira-g14/blob/master/images/image5_language_trend.png" alt="Language Trend" width="300">
+<img src="https://github.com/ZhouShengsheng/ci6226-ira-g14/blob/master/images/image5_language_trend.png" alt="Language Trend" width="600">
 
 - Answering User Ranking
 
-<img src="https://github.com/ZhouShengsheng/ci6226-ira-g14/blob/master/images/image6_user_ranking.png" alt="Answering User Ranking" width="300">
+<img src="https://github.com/ZhouShengsheng/ci6226-ira-g14/blob/master/images/image6_user_ranking.png" alt="Answering User Ranking" width="600">
 
 
 ## 2. Installation
