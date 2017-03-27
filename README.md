@@ -1,9 +1,9 @@
 # Search Engine & IR Applications
 
-Description: Assignment for CI6226 Information Retrieval & Analysis at NTU in Singapore.\
-Group: 14\
-Members: Ke Xiangyu, Li Jinjin, Li Xihan, Zhou Shengsheng\
-Project Home: https://github.com/ZhouShengsheng/ci6226-ira-g14
+**Description**: Assignment for CI6226 Information Retrieval & Analysis at NTU in Singapore.\
+**Group**: 14\
+**Members**: Ke Xiangyu, Li Jinjin, Li Xihan, Zhou Shengsheng\
+**Project Home**: https://github.com/ZhouShengsheng/ci6226-ira-g14
 
 ## Abstract
 
