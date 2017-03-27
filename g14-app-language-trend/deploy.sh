@@ -3,10 +3,12 @@
 # Author: Zhou Shengsheng
 
 # configurations
-SSH_SERVER=shengsheng@155.69.150.182
+REMOTE_SERVER=155.69.150.182
+REMOTE_USER=shengsheng
+SSH_SERVER=${REMOTE_SERVER}@${REMOTE_SERVER}
 APP_NAME=app-language-trend
 JAR_FILE=target/g14-${APP_NAME}.jar
-REMOTE_DIR=/home/shengsheng/Workspaces/IR/projects/${APP_NAME}
+REMOTE_DIR=/home/${REMOTE_USER}/Workspaces/IR/projects/${APP_NAME}
 SERVER_SH=server.sh
 
 # build

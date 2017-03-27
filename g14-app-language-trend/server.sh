@@ -39,14 +39,11 @@ case "$1" in
         $0 stop
         sleep 2
         $0 start
-        echo "=== restarting $SERVICE_NAME"
         ;;
 
     *)
         # restart
-        $0 stop
-        sleep 2
-        $0 start
+        $0 restart
         ;;
 esac
 exit 0
