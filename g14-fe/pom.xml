@@ -11,7 +11,7 @@
 
     <artifactId>g14-fe</artifactId>
     <version>1.0.0-SNAPSHOT</version>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
     <name>g14-fe</name>
 
     <dependencies>

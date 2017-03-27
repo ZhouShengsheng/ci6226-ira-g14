@@ -14,11 +14,30 @@ Stack Overflow is a Q&A website which allows programmers to search, ask, answer 
 
 ### 1.1 System Architecture
 
-![System Architecture](https://github.com/ZhouShengsheng/ci6226-ira-g14/blob/master/images/image1_architecture.png 'System Architecture')
+<img src="https://github.com/ZhouShengsheng/ci6226-ira-g14/blob/master/images/image1_architecture.png" alt="System Architecture" width="500">
 
 ### 1.2 Project Structure
 
-![Project Structure](https://github.com/ZhouShengsheng/ci6226-ira-g14/blob/master/images/image2_project_structure.png 'Project Structure')
+<img src="https://github.com/ZhouShengsheng/ci6226-ira-g14/blob/master/images/image2_project_structure.png" alt="Project Structure" width="300">
+
+### 1.3 Fontend Web Pages
+
+- Home Page
+
+<img src="https://github.com/ZhouShengsheng/ci6226-ira-g14/blob/master/images/image3_home_page.png" alt="Home Page" width="300">
+
+- Search Engine
+
+<img src="https://github.com/ZhouShengsheng/ci6226-ira-g14/blob/master/images/image4_search_engine.png" alt="Search Engine" width="300">
+
+- Language Trend
+
+<img src="https://github.com/ZhouShengsheng/ci6226-ira-g14/blob/master/images/image5_language_trend.png" alt="Language Trend" width="300">
+
+- Answering User Ranking
+
+<img src="https://github.com/ZhouShengsheng/ci6226-ira-g14/blob/master/images/image6_user_ranking.png" alt="Answering User Ranking" width="300">
+
 
 ## 2. Installation
 
@@ -37,10 +56,12 @@ You can change the application configuration in the **src/main/resources/applica
 Every project has the same manner to run. Let's take search engine for example:
 Right click the Main.java in package ci6226.ira.g14.search.engine and select **[Run As -> Spring Boot App]**. Then the search engine will run and listen on 9001 port. The following list lists all of the Main classes and default listened ports of the projects:
 
-- Search Engine: ci6226.ira.g14.search.engine.Main.java, 9001
-- Language Trend: ci6226.ira.g14.app.language.trend.Main.java, 9002
-- Answering User Ranking: ci6226.ira.g14.app.answering.user.ranking.Main.java, 9003
-- Frontend: ci6226.ira.g14.fe.Main.java, 8000
+| Application   | Main.java Package | Port  |
+| ------------- |:-------------:| -----:|
+| Search Engine | ci6226.ira.g14.search.engine.Main.java | 9001 |
+| Language Trend| ci6226.ira.g14.app.language.trend.Main.java | 9002 |
+| Answering User Ranking      | ci6226.ira.g14.app.answering.user.ranking.Main.java | 9003 |
+| Frontend      | ci6226.ira.g14.fe.Main.java | 8000 |
 
 ### 2.2 Installation with IntelliJ
 

@@ -1,12 +1,12 @@
 #!/bin/sh
-# Desc: Language trend application deployment script.
+# Desc: Frontend web page deployment script.
 # Author: Zhou Shengsheng
 
 # configurations
 REMOTE_SERVER=155.69.150.182
 REMOTE_USER=shengsheng
 SSH_SERVER=${REMOTE_USER}@${REMOTE_SERVER}
-APP_NAME=app-language-trend
+APP_NAME=fe
 JAR_FILE=target/g14-${APP_NAME}.jar
 REMOTE_DIR=/home/${REMOTE_USER}/Workspaces/IR/projects/${APP_NAME}
 SERVER_SH=server.sh

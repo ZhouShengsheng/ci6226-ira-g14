@@ -5,7 +5,7 @@
 # configurations
 REMOTE_SERVER=155.69.150.182
 REMOTE_USER=shengsheng
-SSH_SERVER=${REMOTE_SERVER}@${REMOTE_SERVER}
+SSH_SERVER=${REMOTE_USER}@${REMOTE_SERVER}
 APP_NAME=app-answering-user-ranking
 JAR_FILE=target/g14-${APP_NAME}.jar
 REMOTE_DIR=/home/${REMOTE_USER}/Workspaces/IR/projects/${APP_NAME}
