@@ -22,19 +22,19 @@ Stack Overflow is a Q&A website which allows programmers to search, ask, answer 
 
 ### 1.3 Fontend Web Pages
 
-- Home Page
+- **Home Page**
 
 <img src="https://github.com/ZhouShengsheng/ci6226-ira-g14/blob/master/images/image3_home_page.png" alt="Home Page" width="600">
 
-- Search Engine
+- **Search Engine**
 
 <img src="https://github.com/ZhouShengsheng/ci6226-ira-g14/blob/master/images/image4_search_engine.png" alt="Search Engine" width="600">
 
-- Language Trend
+- **Language Trend**
 
 <img src="https://github.com/ZhouShengsheng/ci6226-ira-g14/blob/master/images/image5_language_trend.png" alt="Language Trend" width="600">
 
-- Answering User Ranking
+- **Answering User Ranking**
 
 <img src="https://github.com/ZhouShengsheng/ci6226-ira-g14/blob/master/images/image6_user_ranking.png" alt="Answering User Ranking" width="600">
 
