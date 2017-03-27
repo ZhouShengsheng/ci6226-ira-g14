@@ -46,7 +46,8 @@ Right click the Main.java in package ci6226.ira.g14.search.engine and select **[
 
 #### (1) Import
 
-Open IntelliJ, in the welcome page, select **[Create Project -> Empty Project -> Next -> Navigate location to ci6226-ira-g14 -> Finish]**. Then, in the project structure window, add all projects as module by select [ '+' Symbol -> Import Module -> Choose g14-search-engine (or others) -> Open -> Import module from external module -> Maven -> Next ... -> Finish].
+Open IntelliJ, in the welcome page, select **[Create Project -> Empty Project -> Next -> Navigate location to ci6226-ira-g14 -> Finish]**.\
+Then, in the project structure window, add all projects as module by select **[ '+' Symbol -> Import Module -> Choose g14-search-engine (or others) -> Open -> Import module from external module -> Maven -> Next ... -> Finish]**.
 
 #### (2) Change configuration
 
