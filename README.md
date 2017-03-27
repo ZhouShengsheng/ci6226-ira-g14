@@ -41,6 +41,8 @@ Stack Overflow is a Q&A website which allows programmers to search, ask, answer 
 
 ## 2. Installation
 
+This project is built based on the Stack Overflow Posts data. You can download the data file at https://archive.org/download/stackexchange/stackoverflow.com-Posts.7z. It is quite large, approximately 10 GB. Once you have downloaded the data file, uncompress it to get the Posts.xml file. The applications of this project build their indices and documents on top of the Posts.xml data file.
+
 ### 2.1 Installation with Eclipse
 
 #### (1) Import
