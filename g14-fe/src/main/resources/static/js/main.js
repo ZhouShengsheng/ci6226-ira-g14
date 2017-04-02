@@ -15,7 +15,7 @@ $(document).ready(function(){
 	
 	$.ajax({
         type: "get",
-        url: "http://155.69.150.182:9000/api/search",  /* 注意后面的名字对应CS的方法名称 */
+        url: "http://localhost:9000/api/search",  /* 注意后面的名字对应CS的方法名称 */
         data: {"field": field, "keywords":keywords, "count":20},
         contentType: "application/json; charset=utf-8",
         dataType: "text",

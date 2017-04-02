@@ -44,7 +44,7 @@ $(function(){
 		
 		$.ajax({
 	        type: "get",
-	        url: "http://155.69.150.182:9001/api/language_trend?rankLanguages=java%2Cc%2Cc%2B%2B%2Cc%23%2Cgo%2Cswift%2Cpython%2Cphp&startYear=2008&endYear=2016",  /* 注意后面的名字对应CS的方法名称 */
+	        url: "http://localhost:9001/api/language_trend?rankLanguages=java%2Cc%2Cc%2B%2B%2Cc%23%2Cgo%2Cswift%2Cpython%2Cphp&startYear=2008&endYear=2016",  /* 注意后面的名字对应CS的方法名称 */
 	        contentType: "application/json; charset=utf-8",
 	        dataType: "text",
 	        success: function (result) {

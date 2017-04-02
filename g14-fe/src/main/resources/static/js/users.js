@@ -522,7 +522,7 @@ $(function(){
 		
 		$.ajax({
 	        type: "get",
-	        url: "http://155.69.150.182:9002/api/user_ranking",  /* 注意后面的名字对应CS的方法名称 */
+	        url: "http://localhost:9002/api/user_ranking",  /* 注意后面的名字对应CS的方法名称 */
 	        data: {"userCount": count},
 	        contentType: "application/json; charset=utf-8",
 	        dataType: "text",
